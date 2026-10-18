@@ -19,13 +19,13 @@
             --accent-red: #ef4444;
             --accent-blue: #3b82f6;
 
-            /* درجات الورقي/الزهري الأنيق للجدول والورقة */
-            --pink-main: #b5838d;
-            --pink-light: #e5989b;
-            --pink-soft-bg: #fff0f3;
-            --pink-border: #f2c6de;
-            --table-header: #6d597a;
-            --table-day-bg: #f7ede2;
+            /* ألوان الطباعة الافتراضية - قابلة للتخصيص من قبل المستخدم */
+            --custom-main: #b5838d;
+            --custom-light: #e5989b;
+            --custom-soft-bg: #fff0f3;
+            --custom-border: #f2c6de;
+            --custom-table-header: #6d597a;
+            --custom-day-bg: #f7ede2;
         }
 
         body.theme-female {
@@ -427,13 +427,13 @@
         }
 
         /* ------------------------------------------------------------- */
-        /* تصميم الورقة المزخرفة باللون الزهري والورد الناعم للفصل الدراسي */
+        /* تصميم الورقة المزخرفة القابلة للتخصص الكامل بالقياس والمساحة */
         /* ------------------------------------------------------------- */
         .printable-sheet-wrapper {
             width: 100%;
             background: #ffffff;
-            padding: 18px;
-            border: 3.5px solid var(--pink-main);
+            padding: 16px;
+            border: 3.5px solid var(--custom-main);
             border-radius: 16px;
             position: relative;
             box-shadow: 0 4px 15px rgba(0,0,0,0.04);
@@ -441,6 +441,7 @@
             overflow-x: auto;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             gap: 12px;
         }
 
@@ -448,7 +449,7 @@
             content: '';
             position: absolute;
             top: 5px; bottom: 5px; left: 5px; right: 5px;
-            border: 1.5px dashed var(--pink-light);
+            border: 1.5px dashed var(--custom-light);
             border-radius: 12px;
             pointer-events: none;
         }
@@ -460,36 +461,35 @@
 
         .sheet-title {
             display: inline-block;
-            background: linear-gradient(135deg, var(--pink-main), var(--pink-light));
+            background: linear-gradient(135deg, var(--custom-main), var(--custom-light));
             color: white;
-            padding: 6px 35px;
+            padding: 8px 40px;
             border-radius: 25px;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 800;
-            box-shadow: 0 3px 8px rgba(181, 131, 141, 0.3);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
         }
 
-        /* شريط البيانات الأساسية للطالبة للفصل/السنة */
         .student-info-bar {
             display: flex;
             justify-content: space-around;
-            background: var(--pink-soft-bg);
-            border: 1px solid var(--pink-border);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 12px;
+            background: var(--custom-soft-bg);
+            border: 1.5px solid var(--custom-border);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 13px;
             font-weight: 700;
-            color: var(--pink-main);
+            color: var(--custom-main);
         }
 
         .info-item input {
             border: none;
-            border-bottom: 1px solid var(--pink-main);
+            border-bottom: 1.5px solid var(--custom-main);
             background: transparent;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             color: var(--text-color);
-            width: 90px;
+            width: 110px;
             text-align: center;
             outline: none;
             padding: 2px;
@@ -501,31 +501,32 @@
             border-collapse: collapse;
             background: white;
             min-width: 550px;
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
+            flex: 1;
         }
 
         .schedule-table-custom th, .schedule-table-custom td {
-            border: 1.5px solid #e8c5ce;
-            padding: 8px 4px;
+            border: 1.5px solid var(--custom-border);
+            padding: 10px 4px;
             text-align: center;
             vertical-align: middle;
         }
 
         .schedule-table-custom th {
-            background-color: var(--table-header) !important;
+            background-color: var(--custom-table-header) !important;
             color: white !important;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 800;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
         }
 
         .schedule-table-custom td.day-cell {
-            background-color: var(--table-day-bg) !important;
+            background-color: var(--custom-day-bg) !important;
             font-weight: 800;
-            color: var(--table-header);
-            font-size: 13px;
+            color: var(--custom-table-header);
+            font-size: 14px;
             width: 12%;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
@@ -536,36 +537,34 @@
             border: none;
             background: transparent;
             text-align: center;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             color: #4a2830;
             outline: none;
         }
 
-        /* استغلال المساحة السفلية لأهداف وطموحات الفصل الدراسي والعبارة الملهمة */
         .sheet-bottom-simple {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-top: 4px;
+            gap: 12px;
         }
 
         .quote-banner-box {
-            background: var(--pink-soft-bg);
-            border: 1.5px dashed var(--pink-light);
+            background: var(--custom-soft-bg);
+            border: 1.5px dashed var(--custom-light);
             border-radius: 10px;
-            padding: 8px 12px;
+            padding: 10px 14px;
             text-align: center;
         }
 
         .quote-banner-box textarea {
             width: 100%;
-            height: 42px;
+            height: 40px;
             border: none;
             background: transparent;
-            color: var(--pink-main);
+            color: var(--custom-main);
             font-weight: 700;
-            font-size: 12px;
+            font-size: 13px;
             text-align: center;
             resize: none;
             outline: none;
@@ -575,39 +574,39 @@
 
         .notes-print-area {
             background: #fff9fb;
-            border: 1.5px solid #f2c6de;
+            border: 1.5px solid var(--custom-border);
             border-radius: 10px;
-            padding: 10px 14px;
+            padding: 12px 16px;
         }
 
         .notes-print-title {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 800;
-            color: var(--pink-main);
-            margin-bottom: 6px;
+            color: var(--custom-main);
+            margin-bottom: 8px;
         }
 
         .notes-blank-lines {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
 
         .blank-line {
-            border-bottom: 1px dashed #f0b6c5;
-            height: 16px;
+            border-bottom: 1.5px dashed var(--custom-light);
+            height: 18px;
         }
 
         .sheet-footer {
             text-align: center;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--pink-main);
-            margin-top: 2px;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--custom-main);
+            padding-top: 4px;
         }
 
         /* ------------------------------------------------------------- */
-        /* قواعد الطباعة - صفحة A4 واحدة ورقية زهرية كاملة للفصل الدراسي */
+        /* إعدادات الطباعة الدقيقة لإجبار صفحة A4 واحدة ممتازة بدون انقسام */
         /* ------------------------------------------------------------- */
         @page {
             size: A4 landscape;
@@ -616,8 +615,8 @@
 
         @media print {
             html, body {
-                width: 100% !important;
-                height: 100% !important;
+                width: 297mm !important;
+                height: 210mm !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 background: white !important;
@@ -643,9 +642,9 @@
                 max-width: 297mm !important;
                 max-height: 210mm !important;
                 margin: 0 !important;
-                padding: 10mm 15mm !important;
+                padding: 12mm 15mm !important;
                 box-sizing: border-box !important;
-                border: 4px solid var(--pink-main) !important;
+                border: 4px solid var(--custom-main) !important;
                 border-radius: 0 !important;
                 box-shadow: none !important;
                 background: #ffffff !important;
@@ -659,16 +658,17 @@
             .schedule-table-custom {
                 min-width: 100% !important;
                 width: 100% !important;
+                margin: 10px 0 !important;
             }
 
             .schedule-table-custom th {
-                padding: 6px 4px !important;
-                font-size: 12px !important;
+                padding: 10px 4px !important;
+                font-size: 13px !important;
             }
 
             .schedule-table-custom td {
-                padding: 6px 4px !important;
-                font-size: 11px !important;
+                padding: 10px 4px !important;
+                font-size: 12px !important;
             }
 
             .no-print {
@@ -821,7 +821,7 @@
 
                     <div class="banner-slide" id="slide2">
                         <h3>🗓️ جدول الحصص المدرسية</h3>
-                        <p id="slide2Desc">أدخلي أيام دوامك وحصصك واختاري التصميم المزخرف الجاهز للطباعة طوال العام!</p>
+                        <p id="slide2Desc">أدخلي أيام دوامك وحصصك واختاري الألوان والتصاميم المخصصة للطباعة!</p>
                         <button class="banner-btn" onclick="openSection('schoolSchedule')" id="slide2Btn">إنشاء الجدول 🖨️</button>
                     </div>
 
@@ -939,10 +939,10 @@
                 <div id="generatedScheduleOutput"></div>
             </div>
 
-            <!-- 3. جدول الحصص المدرسية (التصميم الزهري الناعم للفصل الكامل) -->
+            <!-- 3. جدول الحصص المدرسية مع خيارات الألوان الكاملة وتصميم الصفحة الواحدة -->
             <div id="schoolScheduleSection" style="display: none;" class="card">
                 <button class="back-nav-btn no-print" onclick="backToHome()">⬅ العودة للرئيسية</button>
-                <h2 class="no-print">🗓️ جدول الحصص المدرسية (للفصل/السنة الدراسية)</h2>
+                <h2 class="no-print">🗓️ جدول الحصص المدرسية (الجامع الكامل)</h2>
                 
                 <div class="no-print" style="background: var(--input-bg); padding: 12px; border-radius: 10px; margin-bottom: 12px;">
                     <div class="form-row" style="margin-bottom: 8px;">
@@ -965,6 +965,25 @@
                         </div>
                     </div>
 
+                    <!-- قسم اختيار وتخصيص ألوان الجدول -->
+                    <div style="border-top: 1px dashed var(--border-color); padding-top: 8px; margin-top: 8px; margin-bottom: 8px;">
+                        <label style="font-size: 12px; font-weight: 800; color: var(--nav-bg); display: block; margin-bottom: 6px;">🎨 تخصيص ألوان الجدول والورقة حسب ذوقكِ:</label>
+                        <div class="form-row" style="gap: 6px;">
+                            <div>
+                                <label style="font-size: 10px; font-weight: bold;">رأس الجدول:</label>
+                                <input type="color" id="colorHeader" value="#6d597a" onchange="updateCustomColors()" style="height: 32px; padding: 1px;">
+                            </div>
+                            <div>
+                                <label style="font-size: 10px; font-weight: bold;">خلفية الأيام:</label>
+                                <input type="color" id="colorDayBg" value="#f7ede2" onchange="updateCustomColors()" style="height: 32px; padding: 1px;">
+                            </div>
+                            <div>
+                                <label style="font-size: 10px; font-weight: bold;">اللون الرئيسي/الإطار:</label>
+                                <input type="color" id="colorMainBorder" value="#b5838d" onchange="updateCustomColors()" style="height: 32px; padding: 1px;">
+                            </div>
+                        </div>
+                    </div>
+
                     <div style="margin-bottom: 8px;">
                         <label style="font-size: 11px; font-weight: bold;">اختر العبارة التحفيزية المكتوبة أسفل الجدول:</label>
                         <select id="presetQuotesSelect" onchange="applyPresetQuote()" style="margin-bottom: 4px;">
@@ -978,13 +997,12 @@
                     <button class="action-btn" onclick="saveSchoolScheduleToProfile()" style="background: var(--accent-green); width: 100%;">حفظ الجدول في الحساب 💾</button>
                 </div>
 
-                <!-- ورقة A4 الزهرية الناعمة بالكامل للجدول الدراسي العام -->
+                <!-- ورقة A4 واحدة كاملة يمتلئ بها الجدول والمربعات السفلية بدون أدنى انقسام -->
                 <div id="printableSheetArea" class="printable-sheet-wrapper">
                     <div class="sheet-header">
                         <div class="sheet-title">✨ جدول الحصص المدرسية ✨</div>
                     </div>
 
-                    <!-- شريط معلومات الطالبة والفصل الدراسي -->
                     <div class="student-info-bar">
                         <div class="info-item">الصف: <input type="text" id="studentGradeInput" placeholder="مثال: الحادي عشر"></div>
                         <div class="info-item">الشعبة: <input type="text" id="studentSectionInput" placeholder="مثال: 1"></div>
@@ -993,7 +1011,6 @@
 
                     <div id="schoolInputsGrid" style="width: 100%;"></div>
 
-                    <!-- استغلال المساحة السفلية بالكامل لطموحات وأهداف الفصل الدراسي -->
                     <div class="sheet-bottom-simple">
                         <div class="quote-banner-box">
                             <textarea id="customQuoteTextarea">🤍 لا تأتي لذة النجاح إلا بعد الصبر على مر الكفاح - موفقة في دراستكِ!</textarea>
@@ -1010,7 +1027,7 @@
                     </div>
 
                     <div class="sheet-footer">
-                        🤍 موقع نَظِّمْها الذكي - أتمنى لكِ التوفيق والنجاح الدائم 🤍
+                        تم التصميم بواسطة منصة نَظِّمْها الذكي - أتمنى لكِ التوفيق والنجاح 🤍
                     </div>
                 </div>
 
@@ -1198,6 +1215,19 @@
             setupSchoolGrid();
         };
 
+        function updateCustomColors() {
+            let headerColor = document.getElementById('colorHeader').value;
+            let dayBgColor = document.getElementById('colorDayBg').value;
+            let mainBorderColor = document.getElementById('colorMainBorder').value;
+
+            document.documentElement.style.setProperty('--custom-table-header', headerColor);
+            document.documentElement.style.setProperty('--custom-day-bg', dayBgColor);
+            document.documentElement.style.setProperty('--custom-main', mainBorderColor);
+            document.documentElement.style.setProperty('--custom-light', mainBorderColor);
+            document.documentElement.style.setProperty('--custom-border', mainBorderColor + '55');
+            document.documentElement.style.setProperty('--custom-soft-bg', mainBorderColor + '15');
+        }
+
         function applyPresetQuote() {
             let selectedVal = document.getElementById('presetQuotesSelect').value;
             if (selectedVal) {
@@ -1381,13 +1411,13 @@
                 <p><strong>1. التقويم التفاعلي:</strong> يمكنكِ التنقل بين الأشهر والسنوات بدءاً من عام 2026، وانقري على أي يوم لعرض كافة تفاصيل امتحاناتكِ وأنشطتكِ المسجلة فيه مرة واحدة.</p>
                 <p><strong>2. قسم الامتحانات:</strong> أضيفي امتحاناتكِ مع اختيار لون المادة، وسيظهر وسم "نفذ الوقت ⌛" تلقائياً إن انتهى تاريخ الامتحان دون إتمامه.</p>
                 <p><strong>3. مساعد الفاينل الذكي:</strong> أدخلي امتحاناتكِ وساعات دراستكِ اليومية لتوليدي خطة دراسية متوازنة للفاينل وقابلة للطباعة.</p>
-                <p><strong>4. جدول الحصص المدرسية:</strong> جدول مزخرف بالزهري الناعم للفصل الكامل، يستغل المساحة السفلية لأهداف وتنبيهات الفصل الدراسي بصفحة A4 واحدة.</p>
+                <p><strong>4. جدول الحصص المدرسية:</strong> جدول مزخرف مخصص للطباعة بصفحة A4 واحدة متكاملة مع إمكانية تحديد ألوانك المفضل للجدول ورأسه.</p>
                 <p><strong>5. الإضافة السريعة (➕):</strong> اضغطي الزر في منتصف الشريط السفلي لإضافة أي مهمة أو مشوار بضغطة واحدة.</p>
             ` : `
                 <p><strong>1. التقويم التفاعلي:</strong> يمكنك التنقل بين الأشهر والسنوات بدءاً من عام 2026، وانقر على أي يوم لعرض كافة تفاصيل امتحاناتك وأنشطتك المسجلة فيه مرة واحدة.</p>
                 <p><strong>2. قسم الامتحانات:</strong> أضف امتحاناتك مع اختيار لون المادة، وسيظهر وسم "نفذ الوقت ⌛" تلقائياً إن انتهى تاريخ الامتحان دون إتمامه.</p>
                 <p><strong>3. مساعد الفاينل الذكي:</strong> أدخل امتحاناتك وساعات دراستك اليومية لتوليد خطة دراسية متوازنة للفاينل وقابلة للطباعة.</p>
-                <p><strong>4. جدول الحصص المدرسية:</strong> جدول مزخرف بالزهري الناعم للفصل الكامل، يستغل المساحة السفلية لأهداف وتنبيهات الفصل الدراسي بصفحة A4 واحدة.</p>
+                <p><strong>4. جدول الحصص المدرسية:</strong> جدول مزخرف مخصص للطباعة بصفحة A4 واحدة متكاملة مع إمكانية تحديد ألوانك المفضلة للجدول ورأسه.</p>
                 <p><strong>5. الإضافة السريعة (➕):</strong> اضغط الزر في منتصف الشريط السفلي لإضافة أي مهمة أو مشوار بضغطة واحدة.</p>
             `;
 
@@ -1802,7 +1832,7 @@
         function getSelectedDaysList() {
             let choice = document.getElementById('workDaysSelect').value;
             if (choice === 'mon-fri') {
-                return ['الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];
+                return ['الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمع'];
             } else if (choice === 'sat-wed') {
                 return ['السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء'];
             } else {
@@ -1853,6 +1883,9 @@
                 grade: grade,
                 section: section,
                 term: term,
+                headerColor: document.getElementById('colorHeader').value,
+                dayBgColor: document.getElementById('colorDayBg').value,
+                mainBorderColor: document.getElementById('colorMainBorder').value,
                 cells: {}
             };
 
@@ -1869,7 +1902,7 @@
             if (allUsers[activeId]) {
                 allUsers[activeId].schoolSchedule = scheduleData;
                 localStorage.setItem('allUniversalUsersDB', JSON.stringify(allUsers));
-                alert("تم حفظ جدول الحصص والمعلومات بنجاح! 💾✨");
+                alert("تم حفظ جدول الحصص والتصميم بنجاح! 💾✨");
             }
         }
 
@@ -1888,6 +1921,11 @@
             if (sch.grade) document.getElementById('studentGradeInput').value = sch.grade;
             if (sch.section) document.getElementById('studentSectionInput').value = sch.section;
             if (sch.term) document.getElementById('studentTermInput').value = sch.term;
+
+            if (sch.headerColor) document.getElementById('colorHeader').value = sch.headerColor;
+            if (sch.dayBgColor) document.getElementById('colorDayBg').value = sch.dayBgColor;
+            if (sch.mainBorderColor) document.getElementById('colorMainBorder').value = sch.mainBorderColor;
+            updateCustomColors();
 
             if (sch.cells) {
                 for (let key in sch.cells) {
@@ -2049,4 +2087,3 @@
     </script>
 </body>
 </html>
- 
