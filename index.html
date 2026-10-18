@@ -3,513 +3,1058 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عالم القطط السحري 🐾 | إهداء خاص</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Mada:wght@600;800&display=swap" rel="stylesheet">
+    <title>نَظِّمْها - المنصة الذكية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-cream: #fdfbf7;
-            --soft-pink: #fce4ec;
-            --accent-peach: #ff8a65;
-            --warm-orange: #ff7043;
-            --text-dark: #4a3e3d;
-            --text-muted: #8d7b7a;
+            --bg-color: #fdfbf7;
+            --nav-bg: #8b5e3c;
             --card-bg: #ffffff;
-            --shadow: 0 10px 25px rgba(255, 112, 67, 0.08);
-            --border-soft: #f4e8e1;
+            --text-color: #4b2e2e;
+            --border-color: #e7bc91;
+            --btn-bg: #8b5e3c;
+            --btn-hover: #6d4528;
+            --input-bg: #fff8f0;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+        }
+
+        body.theme-female {
+            --bg-color: #fdf6f9;
+            --nav-bg: #b56576;
+            --card-bg: #ffffff;
+            --text-color: #5c3a42;
+            --border-color: #f3c6d1;
+            --btn-bg: #b56576;
+            --btn-hover: #934c5b;
+            --input-bg: #fff9fb;
+        }
+
+        body.theme-male {
+            --bg-color: #f4f6f9;
+            --nav-bg: #2c3e50;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #cbd5e1;
+            --btn-bg: #3498db;
+            --btn-hover: #2980b9;
+            --input-bg: #ffffff;
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --nav-bg: #1f1f1f;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --border-color: #333333;
+            --btn-bg: #d97706;
+            --btn-hover: #b45309;
+            --input-bg: #2a2a2a;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Tajawal', sans-serif;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
         }
 
         body {
-            background-color: var(--bg-cream);
-            background-image: radial-gradient(#f4e8e1 1.5px, transparent 1.5px);
-            background-size: 28px 28px;
-            color: var(--text-dark);
-            min-height: 100vh;
-        }
-
-        /* Password Lock Screen */
-        #lock-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #fff5f5 0%, #ffe0b2 100%);
+            background: var(--bg-color);
+            color: var(--text-color);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            z-index: 9999;
-            padding: 20px;
+            min-height: 100vh;
+            transition: all 0.3s ease;
         }
 
-        .lock-box {
-            background: white;
-            padding: 35px 25px;
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 420px;
+        nav {
+            background: var(--nav-bg);
             width: 100%;
-            border: 2px solid var(--border-soft);
+            padding: 18px 30px;
+            color: white;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .lock-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 15px;
-            box-shadow: 0 5px 15px rgba(255, 112, 67, 0.2);
-        }
-
-        .pass-hint {
-            background: var(--soft-pink);
-            color: var(--warm-orange);
-            display: inline-block;
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
             padding: 6px 16px;
-            border-radius: 15px;
-            font-weight: 700;
-            margin: 10px 0 20px 0;
-            font-size: 0.95rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.2s;
         }
+        .logout-btn:hover { background: rgba(255,255,255,0.35); }
 
-        .lock-box input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ffab91;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 1.1rem;
-            outline: none;
-            margin-bottom: 15px;
-        }
-
-        /* Main Container */
         .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px 60px 20px;
-            display: none;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 30px;
-            background: linear-gradient(135deg, #fff5f5 0%, #fff0f3 100%);
-            border-radius: 30px;
-            border: 2px solid var(--border-soft);
-            box-shadow: var(--shadow);
-        }
-
-        .header-badge {
-            display: inline-block;
-            background: var(--soft-pink);
-            color: var(--warm-orange);
-            padding: 6px 18px;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        header h1 {
-            font-size: 2.3rem;
-            color: var(--warm-orange);
-            font-family: 'Mada', sans-serif;
-            margin-bottom: 10px;
-        }
-
-        /* Dedication Message */
-        .dedication-card {
-            background: var(--card-bg);
-            border: 2px dashed #ffab91;
-            border-radius: 24px;
-            padding: 30px;
-            margin-bottom: 35px;
-            box-shadow: var(--shadow);
-            text-align: center;
-        }
-
-        .dedication-title {
-            font-size: 1.4rem;
-            color: var(--accent-peach);
-            font-weight: 800;
-            margin-bottom: 12px;
-        }
-
-        .dedication-text {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: var(--text-dark);
-        }
-
-        .dedication-signature {
-            margin-top: 15px;
-            font-weight: 700;
-            color: var(--warm-orange);
-            font-size: 1.1rem;
-        }
-
-        /* Grid System */
-        .section-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+            max-width: 950px;
+            width: 100%;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex: 1;
         }
 
         .card {
             background: var(--card-bg);
-            border-radius: 24px;
             padding: 25px;
-            border: 1px solid var(--border-soft);
-            box-shadow: var(--shadow);
+            border-radius: 20px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
+            position: relative;
         }
 
-        .card-title {
-            font-size: 1.3rem;
-            color: var(--warm-orange);
-            font-weight: 700;
+        .card h2 {
+            color: var(--nav-bg);
             margin-bottom: 15px;
+            font-size: 20px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .btn {
-            background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%);
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            background: var(--input-bg);
+            color: var(--text-color);
+            transition: border 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--nav-bg);
+        }
+
+        textarea {
+            height: 85px;
+            resize: vertical;
+        }
+
+        button.action-btn {
+            background: var(--btn-bg);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 15px;
             font-weight: 700;
-            font-size: 0.95rem;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(255, 112, 67, 0.2);
-            transition: all 0.2s ease;
-            margin: 3px;
+            transition: background 0.2s, transform 0.1s;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
         }
 
-        .btn:hover {
-            transform: scale(1.04);
+        button.action-btn:hover { background: var(--btn-hover); }
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+        }
+        .form-row > * { flex: 1; }
+
+        .floating-icons-container {
+            position: fixed;
+            left: 20px;
+            bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 100;
         }
 
-        .btn-secondary {
-            background: var(--soft-pink);
-            color: var(--warm-orange);
-            box-shadow: none;
+        .circle-icon-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            font-size: 20px;
+            transition: 0.2s;
         }
 
-        /* 1. Secret Notes */
-        .notes-grid {
+        .circle-icon-btn:hover {
+            transform: scale(1.08);
+            border-color: var(--nav-bg);
+        }
+
+        .sections-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
-        .note-item {
-            background: #fff8f6;
-            border: 2px dashed #ffab91;
+        @media (max-width: 768px) {
+            .sections-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .sections-grid { grid-template-columns: 1fr; }
+            .form-row { flex-direction: column; gap: 0; }
+        }
+
+        .section-box {
+            background: var(--input-bg);
+            padding: 18px;
             border-radius: 16px;
-            padding: 15px 10px;
+            border: 2px solid var(--border-color);
             text-align: center;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
         }
 
-        .note-item:hover {
-            background: var(--soft-pink);
+        .section-box:hover {
+            transform: translateY(-4px);
+            border-color: var(--nav-bg);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.06);
         }
 
-        /* 2. Mood Board */
-        .mood-box {
-            text-align: center;
-            background: #fff8f6;
-            padding: 15px;
-            border-radius: 18px;
-            border: 1px solid #ffe0b2;
+        .section-box.featured-box {
+            background: linear-gradient(135deg, var(--input-bg), var(--card-bg));
+            border-color: var(--nav-bg);
         }
 
-        .mood-img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 14px;
-            margin-bottom: 10px;
-        }
-
-        /* 3. Psychic Cat */
-        .psychic-box {
-            text-align: center;
-            background: #fff8f6;
-            padding: 20px;
-            border-radius: 18px;
-            border: 1px dashed #ffab91;
-        }
-
-        .paw-btn {
-            font-size: 3rem;
+        .back-nav-btn {
+            background: rgba(0,0,0,0.06);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
             cursor: pointer;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 15px;
             display: inline-block;
+        }
+
+        /* Item Cards */
+        .item-card {
+            background: var(--input-bg);
+            padding: 16px;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            border-right: 6px solid var(--nav-bg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
             transition: 0.2s;
-            user-select: none;
         }
 
-        .paw-btn:active {
-            transform: scale(0.85);
+        .item-card.completed {
+            opacity: 0.65;
+            background: rgba(0,0,0,0.03);
         }
 
-        /* 4. Cat Cinema Memes */
-        .meme-img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
+        .item-card.completed .item-title {
+            text-decoration: line-through;
+        }
+
+        .item-card.expired {
+            border-right-color: var(--accent-red) !important;
+        }
+
+        .item-details { flex: 1; }
+        .item-details h3 {
+            font-size: 16px;
+            color: var(--nav-bg);
+            margin-bottom: 4px;
+        }
+        .item-details p {
+            font-size: 13.5px;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-right: 6px;
+        }
+        .badge-expired { background: #fee2e2; color: #991b1b; }
+        .badge-done { background: #d1fae5; color: #065f46; }
+
+        .item-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .btn-sm {
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            transition: 0.2s;
+        }
+        .btn-done { background: var(--accent-green); }
+        .btn-done:hover { background: #059669; }
+        .btn-edit { background: var(--accent-blue); }
+        .btn-edit:hover { background: #2563eb; }
+        .btn-delete { background: var(--accent-red); }
+        .btn-delete:hover { background: #dc2626; }
+
+        /* Calendar Styling */
+        .calendar-container {
+            background: var(--card-bg);
+            padding: 15px;
             border-radius: 16px;
-            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-weight: 700;
+            color: var(--nav-bg);
+            font-size: 17px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+        }
+
+        .calendar-day-name {
+            font-weight: bold;
+            color: var(--text-color);
+            opacity: 0.7;
+            font-size: 12px;
+            padding-bottom: 6px;
+            text-align: center;
+        }
+
+        .calendar-cell {
+            min-height: 90px;
+            background: var(--input-bg);
+            border-radius: 10px;
+            padding: 6px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .calendar-cell.has-exam {
+            background: rgba(239, 68, 68, 0.08);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .calendar-cell .day-num {
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .day-status-indicator {
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 4px;
+            margin-bottom: 3px;
+            width: 100%;
+            text-align: center;
+        }
+        .status-exam { background: #fca5a5; color: #7f1d1d; }
+        .status-event { background: #bfdbfe; color: #1e3a8a; }
+
+        .calendar-event {
+            font-size: 10px;
+            color: white;
+            padding: 3px 5px;
+            border-radius: 5px;
+            margin-top: 2px;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
         }
 
         footer {
+            background: var(--nav-bg);
+            color: white;
             text-align: center;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            padding: 20px 0;
-            font-weight: 700;
+            padding: 16px;
+            width: 100%;
+            font-size: 14px;
+            margin-top: 30px;
         }
     </style>
 </head>
-<body>
+<body id="mainBody">
 
-<!-- Lock Screen / Welcome Modal -->
-<div id="lock-screen">
-    <div class="lock-box">
-        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400" alt="Cute Real Cat" class="lock-img">
-        <h2>أهلاً بكِ في مفاجأتكِ الخاصة! 🐾</h2>
-        <p style="color: var(--text-muted); margin-top: 8px;">ادخلي كلمة السر لفتح الموقع:</p>
-        <div class="pass-hint">كلمة السر هي: cat</div>
-        <br>
-        <input type="text" id="passInput" placeholder="اكتبي كلمة السر هنا...">
-        <button class="btn" style="width: 100%; padding: 12px;" onclick="checkPassword()">دخول ✨</button>
-        <p id="error-msg" style="color: red; font-size: 0.85rem; margin-top: 10px; display: none;">كلمة السر غير صحيحة، جربي كلمة cat</p>
-    </div>
-</div>
-
-<!-- Main Website Container -->
-<div class="container" id="main-content">
-    
-    <header>
-        <span class="header-badge">مساحة خاصة ومليئة بالدفء 🐾</span>
-        <h1>عالم القطط السحري 🐱</h1>
-        <p>ركن ممتع مصمم بالحب والدلال لأجمل أخت في الدنيا!</p>
-    </header>
-
-    <!-- Dedication Card -->
-    <div class="dedication-card">
-        <div class="dedication-title">رسالة خاصة من القلب 💖</div>
-        <div class="dedication-text">
-            "صحيح أنني لا أحب القطط كثيراً.. ولكنني أحبك أنتِ جداً! <br>
-            ولأن ابتسامتك ورؤيتك سعيدة هما أغلى ما لدي، صممت لكِ هذا العالم الصغير اللطيف ليُسعد قلبكِ دائماً!"
-        </div>
-        <div class="dedication-signature">صُنع بحب من أختكِ لجين ✨</div>
+    <!-- floating action buttons -->
+    <div class="floating-icons-container">
+        <div class="circle-icon-btn" onclick="toggleNightMode()" id="darkModeToggleBtn" title="التحويل بين الليل والنهار">🌙</div>
+        <div class="circle-icon-btn" onclick="copySiteLink()" title="نسخ رابط الموقع">🔗</div>
     </div>
 
-    <div class="section-grid">
-
-        <!-- 1. Secret Cat Notes -->
-        <div class="card" style="grid-column: 1 / -1;">
-            <div class="card-title">💌 رسائل القطط السرية (اضغطي لفتح الرسالة)</div>
-            <div class="notes-grid">
-                <div class="note-item" onclick="showNote(1)">
-                    <div style="font-size: 2rem;">🐾</div>
-                    <div style="font-weight: 700; margin-top: 5px;">رسالة #1</div>
-                </div>
-                <div class="note-item" onclick="showNote(2)">
-                    <div style="font-size: 2rem;">🐟</div>
-                    <div style="font-weight: 700; margin-top: 5px;">رسالة #2</div>
-                </div>
-                <div class="note-item" onclick="showNote(3)">
-                    <div style="font-size: 2rem;">✨</div>
-                    <div style="font-weight: 700; margin-top: 5px;">رسالة #3</div>
-                </div>
+    <!-- Auth Screen -->
+    <div id="authScreen" style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex: 1; width: 100%; padding: 20px; max-width: 500px; margin: auto;">
+        <div class="card" style="width: 100%; text-align: center;">
+            <h2>✨ أهلاً بك في موقع نَظِّمْها</h2>
+            <p style="margin-bottom: 18px; font-size: 14px; opacity: 0.8;">سجّل دخولك للبدء بتنظيم جدولك الذكي</p>
+            
+            <input type="text" id="userName" placeholder="اسمك الكريم...">
+            <input type="text" id="uniqueId" placeholder="رقم تعريفي خاص بك...">
+            
+            <label style="display: block; text-align: right; margin-bottom: 8px; font-weight: bold; font-size: 14px;">اختر التصنيف:</label>
+            <div class="form-row" style="margin-bottom: 15px;">
+                <button type="button" class="action-btn" id="maleOpt" onclick="selectGender('male')" style="background: transparent; color: var(--text-color); border: 2px solid var(--border-color);">ذكر 👨</button>
+                <button type="button" class="action-btn" id="femaleOpt" onclick="selectGender('female')" style="background: transparent; color: var(--text-color); border: 2px solid var(--border-color);">أنثى 👩</button>
             </div>
-            <p id="noteDisplay" style="margin-top: 15px; text-align: center; font-weight: 700; color: var(--warm-orange); min-height: 25px;"></p>
-        </div>
 
-        <!-- 2. Cat Mood Board -->
-        <div class="card">
-            <div class="card-title">🐱 كيف حال قطتك اليوم؟ (Cat Mood)</div>
-            <div class="mood-box">
-                <img id="moodImage" src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400" class="mood-img" alt="Cat Mood">
-                <p id="moodText" style="font-weight: 700; margin-bottom: 12px; color: var(--text-dark);">حالة الاسترخاء التام 💤</p>
-                <div>
-                    <button class="btn btn-secondary" onclick="setMood('sleepy')">مروقة ☀️</button>
-                    <button class="btn btn-secondary" onclick="setMood('hungry')">جوعانة 🐟</button>
-                    <button class="btn btn-secondary" onclick="setMood('playful')">مجنونة 🐾</button>
-                </div>
+            <!-- خيار تذكّرني عند التسجيل بالخارج -->
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px; text-align: right;">
+                <input type="checkbox" id="rememberMeAuth" style="width: auto; margin: 0;" checked>
+                <label for="rememberMeAuth" style="font-size: 14px; font-weight: 600; cursor: pointer;">تذكّرني عند العودة مرة أخرى 🔔</label>
             </div>
-        </div>
 
-        <!-- 3. Psychic Cat -->
-        <div class="card">
-            <div class="card-title">🔮 تبصير القطة السحرية</div>
-            <div class="psychic-box">
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px;">فكري في سؤال ببالكِ ثم اضغطي على كف القطة:</p>
-                <div class="paw-btn" onclick="askPsychicCat()">🐾</div>
-                <p id="psychicAnswer" style="font-weight: 800; color: var(--warm-orange); margin-top: 15px;">انقري هنا لتعرفي الإجابة!</p>
-            </div>
+            <button class="action-btn" onclick="registerUser()" style="width: 100%;">دخول 🚀</button>
         </div>
-
-        <!-- 4. Cat Cinema Memes -->
-        <div class="card">
-            <div class="card-title">🍿 سينما لقطط مضحكة</div>
-            <div style="text-align: center;">
-                <img id="memeImg" src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=400" class="meme-img" alt="Meme Cat">
-                <p id="memeCaption" style="font-weight: 700; color: var(--text-dark); margin-bottom: 10px;">"لما تكتشفي إنو في أكل بالثلاجة بالليل:"</p>
-                <button class="btn" style="width: 100%;" onclick="nextMeme()">صورة جديدة 🎬</button>
-            </div>
-        </div>
-
-        <!-- 5. Queen of Cats Consultation -->
-        <div class="card">
-            <div class="card-title">👑 نصيحة خبيرة القطط</div>
-            <div style="background: #fff8f6; padding: 15px; border-radius: 16px; border: 1px dashed #ffab91; text-align: center;">
-                <p id="tipText" style="font-size: 0.95rem; line-height: 1.6; color: var(--text-dark);">"القطط لما تطلع فيكي وتغمض عيونها ببطء، هاي طريقتها لتقول أحبك!"</p>
-            </div>
-            <button class="btn btn-secondary" style="width: 100%; margin-top: 10px;" onclick="nextTip()">نصيحة ثانية 💡</button>
-        </div>
-
-        <!-- 6. Adoption Test -->
-        <div class="card" style="grid-column: 1 / -1;">
-            <div class="card-title">📜 اختبار ملكة القطط: هل أنتِ جاهزة لتبني قطة؟</div>
-            <div id="testBox" style="background: #fff8f6; padding: 20px; border-radius: 16px; text-align: center; border: 1px solid #ffe0b2;">
-                <p id="testQuestion" style="font-weight: 700; margin-bottom: 15px;">سؤال 1: لو القطة خربشت الكنباية شو بتعملي؟</p>
-                <div id="testOptions">
-                    <button class="btn btn-secondary" style="width: 100%; margin-bottom: 8px;" onclick="answerTest(1)">بسامحها فوراً لأنها كيوت 🥺</button>
-                    <button class="btn btn-secondary" style="width: 100%;" onclick="answerTest(2)">بعطيها لعبة خربشة خاصة 🐾</button>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <footer>
-        صُنع بكثير من الحب والدلال لأجمل أخت في الدنيا 💖 | تصميم لجين ✨
-    </footer>
-</div>
+    <!-- Main App Screen -->
+    <div id="appScreen" style="display: none; width: 100%; flex-direction: column; align-items: center; flex: 1;">
+        <nav>
+            <span id="welcomeMsg">📌 نَظِّمْها</span>
+            <button class="logout-btn" onclick="logout()">خروج</button>
+        </nav>
 
-<script>
-    let audioCtx = null;
+        <div class="container">
 
-    function createMeowSound() {
-        if (!audioCtx) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            <!-- Home Section View -->
+            <div id="homeSectionsView" class="card">
+                <h2 style="justify-content: center; margin-bottom: 20px;">اختر القسم الذي تود تنظيمه وإدارته 🤎</h2>
+
+                <div class="sections-grid">
+                    <div class="section-box" onclick="openSection('exams')">
+                        <span style="font-size: 28px;">📚</span>
+                        <h3>الدراسة والامتحانات</h3>
+                    </div>
+                    <div class="section-box" onclick="openSection('cooking')">
+                        <span style="font-size: 28px;">🍳</span>
+                        <h3>الطبخ والأكلات</h3>
+                    </div>
+                    <div class="section-box" onclick="openSection('outings')">
+                        <span style="font-size: 28px;">🚗</span>
+                        <h3>المشاوير والطلعات</h3>
+                    </div>
+                    <div class="section-box" onclick="openSection('tasks')">
+                        <span style="font-size: 28px;">✅</span>
+                        <h3>المهام اليومية</h3>
+                    </div>
+                </div>
+
+                <!-- Calendar View -->
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <span>📅 التقويم التفاعلي الشامل (أكتوبر 2026)</span>
+                    </div>
+                    <div class="calendar-grid" id="masterCalendarGrid"></div>
+                </div>
+
+                <!-- Quick Tasks List -->
+                <div style="margin-top: 20px;">
+                    <h3 style="color: var(--nav-bg); margin-bottom: 12px; font-size: 17px;">📌 قائمة المهام اليومية</h3>
+                    <div id="homeTasksList"></div>
+                </div>
+            </div>
+
+            <!-- 1. Exams Section -->
+            <div id="examsSection" style="display: none;" class="card">
+                <button class="back-nav-btn" onclick="backToHome()">⬅ العودة للرئيسية</button>
+                <h2>📚 قسم الدراسة والامتحانات</h2>
+                
+                <div style="background: var(--input-bg); padding: 15px; border-radius: 14px; margin-bottom: 20px; border: 1px solid var(--border-color);">
+                    <input type="hidden" id="editingExamId" value="">
+                    <input type="text" id="examSubject" placeholder="اسم المادة...">
+                    
+                    <div class="form-row">
+                        <div>
+                            <label style="font-size: 13px; font-weight: bold;">تاريخ الامتحان:</label>
+                            <input type="date" id="examDate">
+                        </div>
+                        <div>
+                            <label style="font-size: 13px; font-weight: bold;">لون المادة:</label>
+                            <input type="color" id="examColor" value="#3498db" style="height: 45px; padding: 2px;">
+                        </div>
+                    </div>
+
+                    <textarea id="examContent" placeholder="المواضيع المطلوبة للدراسة..."></textarea>
+                    <button class="action-btn" id="examSubmitBtn" onclick="saveExam()" style="width: 100%;">إضافة الامتحان ✨</button>
+                </div>
+
+                <h3 style="margin-bottom: 12px; color: var(--nav-bg);">جدول الامتحانات القادمة</h3>
+                <div id="examsList"></div>
+            </div>
+
+            <!-- 2. Cooking Section -->
+            <div id="cookingSection" style="display: none;" class="card">
+                <button class="back-nav-btn" onclick="backToHome()">⬅ العودة للرئيسية</button>
+                <h2>🍳 قسم الطبخ والأكلات</h2>
+                
+                <div style="background: var(--input-bg); padding: 15px; border-radius: 14px; margin-bottom: 20px;">
+                    <input type="hidden" id="editingDishId" value="">
+                    <input type="text" id="dishName" placeholder="اسم الطبخة أو الأكلة...">
+                    <label style="font-size: 13px; font-weight: bold;">يوم التحضير:</label>
+                    <input type="date" id="dishDate">
+                    <textarea id="dishIngredients" placeholder="المقادير والمكونات..."></textarea>
+                    <button class="action-btn" id="dishSubmitBtn" onclick="saveDish()" style="width: 100%;">إضافة الطبخة للقائمة 🍲</button>
+                </div>
+
+                <h3 style="margin-bottom: 12px; color: var(--nav-bg);">جدول الطبخات والأكلات</h3>
+                <div id="cookingList"></div>
+            </div>
+
+            <!-- 3. Outings Section -->
+            <div id="outingsSection" style="display: none;" class="card">
+                <button class="back-nav-btn" onclick="backToHome()">⬅ العودة للرئيسية</button>
+                <h2>🚗 قسم المشاوير والطلعات</h2>
+                
+                <div style="background: var(--input-bg); padding: 15px; border-radius: 14px; margin-bottom: 20px;">
+                    <input type="hidden" id="editingOutingId" value="">
+                    <input type="text" id="outingPlace" placeholder="مكان المشوار أو الطلعة...">
+                    <label style="font-size: 13px; font-weight: bold;">تاريخ المشوار:</label>
+                    <input type="date" id="outingDate">
+                    <textarea id="outingNotes" placeholder="تفاصيل أو ملاحظات إضافية..."></textarea>
+                    <button class="action-btn" id="outingSubmitBtn" onclick="saveOuting()" style="width: 100%;">إضافة المشوار للجدول 🗺️</button>
+                </div>
+
+                <h3 style="margin-bottom: 12px; color: var(--nav-bg);">قائمة المشاوير والطلعات</h3>
+                <div id="outingsList"></div>
+            </div>
+
+            <!-- 4. Daily Tasks Section -->
+            <div id="tasksSection" style="display: none;" class="card">
+                <button class="back-nav-btn" onclick="backToHome()">⬅ العودة للرئيسية</button>
+                <h2>✅ قسم المهام والتذكيرات اليومية</h2>
+                
+                <div style="background: var(--input-bg); padding: 15px; border-radius: 14px; margin-bottom: 20px;">
+                    <input type="hidden" id="editingTaskId" value="">
+                    <input type="text" id="taskName" placeholder="المهمة أو الالتزام المطلوب...">
+                    <textarea id="taskNotes" placeholder="تفاصيل إضافية..."></textarea>
+                    <button class="action-btn" id="taskSubmitBtn" onclick="saveTask()" style="width: 100%;">إضافة المهمة للقائمة 📌</button>
+                </div>
+
+                <h3 style="margin-bottom: 12px; color: var(--nav-bg);">قائمة المهام والالتزامات</h3>
+                <div id="tasksList"></div>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>© 2026 موقع نَظِّمْها الذكي - جميع الحقوق محفوظة</p>
+            <p style="font-size: 13px; opacity: 0.9; margin-top: 4px;">فكرة وتصميم وإشراف: لُجين 🤍</p>
+        </footer>
+    </div>
+
+    <script>
+        let selectedGender = '';
+
+        window.onload = function() {
+            // التحقق مما إذا كان خيار تذكّرني مفعلاً للجيل الحالي
+            let rememberUser = localStorage.getItem('rememberUserFlag');
+            let activeUser = localStorage.getItem('activeUniversalUser');
+            
+            if (rememberUser === 'true' && activeUser) {
+                loadUserSession(activeUser);
+            } else {
+                document.getElementById('authScreen').style.display = 'flex';
+            }
+        };
+
+        function selectGender(gender) {
+            selectedGender = gender;
+            document.getElementById('maleOpt').style.borderColor = gender === 'male' ? 'var(--nav-bg)' : 'var(--border-color)';
+            document.getElementById('femaleOpt').style.borderColor = gender === 'female' ? 'var(--nav-bg)' : 'var(--border-color)';
+            document.body.className = gender === 'male' ? 'theme-male' : 'theme-female';
         }
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
 
-        const now = audioCtx.currentTime;
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(550, now);
-        osc.frequency.exponentialRampToValueAtTime(850, now + 0.15);
-        osc.frequency.exponentialRampToValueAtTime(400, now + 0.5);
-        gain.gain.setValueAtTime(0.3, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
-
-        osc.start(now);
-        osc.stop(now + 0.5);
-    }
-
-    function checkPassword() {
-        const input = document.getElementById('passInput').value.trim().toLowerCase();
-        const errorMsg = document.getElementById('error-msg');
-        
-        if (input === 'cat') {
-            document.getElementById('lock-screen').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            createMeowSound();
-        } else {
-            errorMsg.style.display = 'block';
+        function copySiteLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert("تم نسخ رابط الموقع بنجاح! 📋✨");
+            });
         }
-    }
 
-    const notes = [
-        "",
-        "القطة بتقولك: أنتِ أفضل وألطف أخت في الدنيا كل يوم! 💖",
-        "تذكير لطيف: الابتسامة بتلبقلك جداً، خليكي دايماً مبسوطة ✨",
-        "القطة كشفت سر: لجين بتحبك كتير ومجهزة هالشي لترسم بسمة على وجهك! 🐾"
-    ];
-    function showNote(num) {
-        document.getElementById('noteDisplay').textContent = notes[num];
-        createMeowSound();
-    }
-
-    function setMood(type) {
-        const img = document.getElementById('moodImage');
-        const txt = document.getElementById('moodText');
-        if(type === 'sleepy') {
-            img.src = 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400';
-            txt.textContent = 'حالة الاسترخاء تحت الشمس ☀️';
-        } else if(type === 'hungry') {
-            img.src = 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=400';
-            txt.textContent = 'نظرة "وين التونة تبعتي؟" 🐟';
-        } else {
-            img.src = 'https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=400';
-            txt.textContent = 'طاقة ومرح وسباقات بالبيت 🐾';
+        function toggleNightMode() {
+            document.body.classList.toggle('dark-mode');
+            let isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('darkModeToggleBtn').innerHTML = isDark ? '☀️' : '🌙';
         }
-    }
 
-    const answers = [
-        "القطة بتقول: نعم طبعاً! ✨",
-        "القطة بتنصحك بالاسترخاء وأخذ قسط من النوم 💤",
-        "الإجابة هي: خبر سار بانتظارك اليوم! 🌸",
-        "القطة بتقول: امم.. اسألي أختك لجين أفضل! 😸",
-        "بالتأكيد! الأشياء الحلوة جاية بالطريق 💖"
-    ];
-    function askPsychicCat() {
-        const randomAns = answers[Math.floor(Math.random() * answers.length)];
-        document.getElementById('psychicAnswer').textContent = randomAns;
-        createMeowSound();
-    }
+        function registerUser() {
+            let name = document.getElementById('userName').value.trim();
+            let id = document.getElementById('uniqueId').value.trim();
+            let rememberMe = document.getElementById('rememberMeAuth').checked;
 
-    const memes = [
-        { img: 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=400', cap: '"لما تكتشفي إنو في أكل بالثلاجة بالليل:"' },
-        { img: 'https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=400', cap: '"شغلي الهدوء والدفء واستمتعي بيومك ✨"' },
-        { img: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400', cap: '"نظرتك لما حد يقولك القطة مش كيوت:"' }
-    ];
-    let memeIdx = 0;
-    function nextMeme() {
-        memeIdx = (memeIdx + 1) % memes.length;
-        document.getElementById('memeImg').src = memes[memeIdx].img;
-        document.getElementById('memeCaption').textContent = memes[memeIdx].cap;
-    }
+            if (!name || !id || !selectedGender) {
+                alert("الرجاء تعبئة كافة الحقول واختيار التصنيف.");
+                return;
+            }
 
-    const tips = [
-        "القطط لما تطلع فيكي وتغمض عيونها ببطء، هاي طريقتها لتقول أحبك!",
-        "خرير القطط يمتلك ترددات تساعد على نشر الطاقة الإيجابية والهدوء.",
-        "القطط تحب الأماكن المرتفعة لأنها بتعطيها شعور بالأمان والسيطرة."
-    ];
-    let tipIdx = 0;
-    function nextTip() {
-        tipIdx = (tipIdx + 1) % tips.length;
-        document.getElementById('tipText').textContent = tips[tipIdx];
-    }
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
 
-    function answerTest(opt) {
-        document.getElementById('testBox').innerHTML = `
-            <h3 style="color:var(--warm-orange); margin-bottom:10px;">👑 النتيجة: أنتِ رسمياً ملكة القطط!</h3>
-            <p style="color:var(--text-dark);">قلبك طيب وصبور وتستحقي تكوني أفضل صاحبة قطة بالدنيا! 🐾✨</p>
-        `;
-        createMeowSound();
-    }
-</script>
+            if (!allUsers[id]) {
+                allUsers[id] = {
+                    name: name,
+                    gender: selectedGender,
+                    exams: [],
+                    cooking: [],
+                    outings: [],
+                    tasks: []
+                };
+                localStorage.setItem('allUniversalUsersDB', JSON.stringify(allUsers));
+            }
 
+            localStorage.setItem('activeUniversalUser', id);
+            localStorage.setItem('rememberUserFlag', rememberMe ? 'true' : 'false');
+            loadUserSession(id);
+        }
+
+        function loadUserSession(id) {
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+            let currentUser = allUsers[id];
+
+            if (!currentUser) { logout(); return; }
+
+            document.body.className = currentUser.gender === 'male' ? 'theme-male' : 'theme-female';
+            document.getElementById('authScreen').style.display = 'none';
+            document.getElementById('appScreen').style.display = 'flex';
+            document.getElementById('welcomeMsg').innerText = `📌 أهلاً بك، ${currentUser.name}`;
+
+            refreshAllData(id);
+        }
+
+        function openSection(sec) {
+            document.getElementById('homeSectionsView').style.display = 'none';
+            ['examsSection', 'cookingSection', 'outingsSection', 'tasksSection'].forEach(s => {
+                document.getElementById(s).style.display = 'none';
+            });
+            document.getElementById(sec + 'Section').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function backToHome() {
+            ['examsSection', 'cookingSection', 'outingsSection', 'tasksSection'].forEach(s => {
+                document.getElementById(s).style.display = 'none';
+            });
+            document.getElementById('homeSectionsView').style.display = 'block';
+            let activeId = localStorage.getItem('activeUniversalUser');
+            if (activeId) refreshAllData(activeId);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function refreshAllData(userId) {
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+            let user = allUsers[userId] || { exams:[], cooking:[], outings:[], tasks:[] };
+
+            displayExams(user.exams);
+            displayCooking(user.cooking);
+            displayOutings(user.outings);
+            displayTasks(user.tasks);
+            buildMasterCalendar(user);
+        }
+
+        // --- Daily Tasks Section (تشتمل بوضوح على: تم، تعديل، حذف) ---
+        function saveTask() {
+            let editId = document.getElementById('editingTaskId').value;
+            let name = document.getElementById('taskName').value.trim();
+            let notes = document.getElementById('taskNotes').value.trim();
+
+            if (!name) { alert("يرجى إدخال اسم المهمة."); return; }
+
+            let activeId = localStorage.getItem('activeUniversalUser');
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+
+            if (editId) {
+                let item = allUsers[activeId].tasks.find(t => t.id == editId);
+                if (item) { item.name = name; item.notes = notes; }
+                document.getElementById('editingTaskId').value = '';
+                document.getElementById('taskSubmitBtn').innerText = 'إضافة المهمة للقائمة 📌';
+            } else {
+                allUsers[activeId].tasks.unshift({ id: Date.now(), name, notes, done: false });
+            }
+
+            localStorage.setItem('allUniversalUsersDB', JSON.stringify(allUsers));
+            document.getElementById('taskName').value = '';
+            document.getElementById('taskNotes').value = '';
+            refreshAllData(activeId);
+        }
+
+        function editTask(id) {
+            openSection('tasks');
+            let activeId = localStorage.getItem('activeUniversalUser');
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+            let item = allUsers[activeId].tasks.find(t => t.id == id);
+            if (item) {
+                document.getElementById('editingTaskId').value = item.id;
+                document.getElementById('taskName').value = item.name;
+                document.getElementById('taskNotes').value = item.notes;
+                document.getElementById('taskSubmitBtn').innerText = 'حفظ التعديلات 🔄';
+            }
+        }
+
+        function displayTasks(tasks) {
+            let container = document.getElementById('tasksList');
+            if (!tasks || tasks.length === 0) {
+                container.innerHTML = '<p style="text-align: center; opacity: 0.6;">لا توجد مهام مسجلة.</p>';
+                return;
+            }
+            container.innerHTML = tasks.map(t => `
+                <div class="item-card ${t.done ? 'completed' : ''}">
+                    <div class="item-details">
+                        <h3 class="item-title">
+                            ✅ ${t.name}
+                            ${t.done ? '<span class="badge badge-done">مكتملة ✅</span>' : ''}
+                        </h3>
+                        <p>📝 <strong>التفاصيل:</strong> ${t.notes || 'لا توجد'}</p>
+                    </div>
+                    <!-- الأزرار المحددة: تم، تعديل، حذف -->
+                    <div class="item-actions">
+                        <button class="btn-sm btn-done" onclick="toggleDone('tasks', ${t.id})">${t.done ? 'إلغاء' : 'تم ✅'}</button>
+                        <button class="btn-sm btn-edit" onclick="editTask(${t.id})">تعديل ✍️</button>
+                        <button class="btn-sm btn-delete" onclick="deleteItem('tasks', ${t.id})">حذف 🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- Exams Section ---
+        function saveExam() {
+            let editId = document.getElementById('editingExamId').value;
+            let subject = document.getElementById('examSubject').value.trim();
+            let color = document.getElementById('examColor').value;
+            let date = document.getElementById('examDate').value;
+            let content = document.getElementById('examContent').value.trim();
+
+            if (!subject || !date) { alert("يرجى ملء كافة البيانات الرئيسية."); return; }
+
+            let activeId = localStorage.getItem('activeUniversalUser');
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+
+            if (editId) {
+                let item = allUsers[activeId].exams.find(e => e.id == editId);
+                if (item) {
+                    item.subject = subject; item.color = color; item.date = date; item.content = content;
+                }
+                document.getElementById('editingExamId').value = '';
+                document.getElementById('examSubmitBtn').innerText = 'إضافة الامتحان ✨';
+            } else {
+                allUsers[activeId].exams.unshift({ id: Date.now(), subject, color, date, content, done: false });
+            }
+
+            localStorage.setItem('allUniversalUsersDB', JSON.stringify(allUsers));
+            document.getElementById('examSubject').value = '';
+            document.getElementById('examDate').value = '';
+            document.getElementById('examContent').value = '';
+            refreshAllData(activeId);
+        }
+
+        function editExam(id) {
+            openSection('exams');
+            let activeId = localStorage.getItem('activeUniversalUser');
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+            let item = allUsers[activeId].exams.find(e => e.id == id);
+
+            if (item) {
+                document.getElementById('editingExamId').value = item.id;
+                document.getElementById('examSubject').value = item.subject;
+                document.getElementById('examColor').value = item.color;
+                document.getElementById('examDate').value = item.date;
+                document.getElementById('examContent').value = item.content;
+                document.getElementById('examSubmitBtn').innerText = 'حفظ التعديلات 🔄';
+            }
+        }
+
+        function displayExams(exams) {
+            let container = document.getElementById('examsList');
+            if (!exams || exams.length === 0) {
+                container.innerHTML = '<p style="text-align: center; opacity: 0.6;">لا توجد امتحانات مسجلة.</p>';
+                return;
+            }
+
+            let todayStr = new Date().toISOString().split('T')[0];
+            container.innerHTML = exams.map(ex => {
+                let isExpired = ex.date < todayStr && !ex.done;
+                return `
+                    <div class="item-card ${ex.done ? 'completed' : (isExpired ? 'expired' : '')}" style="border-right-color: ${ex.color};">
+                        <div class="item-details">
+                            <h3 class="item-title">
+                                ${ex.subject}
+                                ${ex.done ? '<span class="badge badge-done">تم الانتهاء ✅</span>' : ''}
+                                ${isExpired ? '<span class="badge badge-expired">نفذ الوقت ⌛</span>' : ''}
+                            </h3>
+                            <p>📅 <strong>التاريخ:</strong> ${ex.date}</p>
+                            <p>📝 <strong>المطلوب:</strong> ${ex.content || 'لا تفاصيل'}</p>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-sm btn-done" onclick="toggleDone('exams', ${ex.id})">${ex.done ? 'إلغاء' : 'تم ✅'}</button>
+                            <button class="btn-sm btn-edit" onclick="editExam(${ex.id})">تعديل ✍️</button>
+                            <button class="btn-sm btn-delete" onclick="deleteItem('exams', ${ex.id})">حذف 🗑️</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- Generic Item Operations ---
+        function toggleDone(type, id) {
+            let activeId = localStorage.getItem('activeUniversalUser');
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+            let item = allUsers[activeId][type].find(i => i.id == id);
+            if (item) {
+                item.done = !item.done;
+                localStorage.setItem('allUniversalUsersDB', JSON.stringify(allUsers));
+                refreshAllData(activeId);
+            }
+        }
+
+        function deleteItem(type, id) {
+            if (!confirm("هل أنت متأكد من الحذف؟")) return;
+            let activeId = localStorage.getItem('activeUniversalUser');
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+            allUsers[activeId][type] = allUsers[activeId][type].filter(i => i.id != id);
+            localStorage.setItem('allUniversalUsersDB', JSON.stringify(allUsers));
+            refreshAllData(activeId);
+        }
+
+        // --- Cooking Section ---
+        function saveDish() {
+            let editId = document.getElementById('editingDishId').value;
+            let name = document.getElementById('dishName').value.trim();
+            let date = document.getElementById('dishDate').value;
+            let ingredients = document.getElementById('dishIngredients').value.trim();
+
+            if (!name || !date) { alert("يرجى إدخال البيانات الرئيسية للطبخة."); return; }
+
+            let activeId = localStorage.getItem('activeUniversalUser');
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+
+            if (editId) {
+                let item = allUsers[activeId].cooking.find(c => c.id == editId);
+                if (item) { item.name = name; item.date = date; item.ingredients = ingredients; }
+                document.getElementById('editingDishId').value = '';
+                document.getElementById('dishSubmitBtn').innerText = 'إضافة الطبخة للقائمة 🍲';
+            } else {
+                allUsers[activeId].cooking.unshift({ id: Date.now(), name, date, ingredients, done: false });
+            }
+
+            localStorage.setItem('allUniversalUsersDB', JSON.stringify(allUsers));
+            document.getElementById('dishName').value = '';
+            document.getElementById('dishDate').value = '';
+            document.getElementById('dishIngredients').value = '';
+            refreshAllData(activeId);
+        }
+
+        function editDish(id) {
+            openSection('cooking');
+            let activeId = localStorage.getItem('activeUniversalUser');
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+            let item = allUsers[activeId].cooking.find(c => c.id == id);
+            if (item) {
+                document.getElementById('editingDishId').value = item.id;
+                document.getElementById('dishName').value = item.name;
+                document.getElementById('dishDate').value = item.date;
+                document.getElementById('dishIngredients').value = item.ingredients;
+                document.getElementById('dishSubmitBtn').innerText = 'حفظ التعديلات 🔄';
+            }
+        }
+
+        function displayCooking(cooking) {
+            let container = document.getElementById('cookingList');
+            if (!cooking || cooking.length === 0) {
+                container.innerHTML = '<p style="text-align: center; opacity: 0.6;">لا توجد طبخات مسجلة.</p>';
+                return;
+            }
+            container.innerHTML = cooking.map(c => `
+                <div class="item-card ${c.done ? 'completed' : ''}" style="border-right-color: #e67e22;">
+                    <div class="item-details">
+                        <h3 class="item-title">🍳 الطبخة: ${c.name} ${c.done ? '<span class="badge badge-done">تم التحضير ✅</span>' : ''}</h3>
+                        <p>📅 <strong>التاريخ:</strong> ${c.date}</p>
+                        <p>🛒 <strong>المقادير:</strong> ${c.ingredients || 'لا توجد'}</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-sm btn-done" onclick="toggleDone('cooking', ${c.id})">${c.done ? 'إلغاء' : 'تم ✅'}</button>
+                        <button class="btn-sm btn-edit" onclick="editDish(${c.id})">تعديل ✍️</button>
+                        <button class="btn-sm btn-delete" onclick="deleteItem('cooking', ${c.id})">حذف 🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- Outings Section ---
+        function saveOuting() {
+            let editId = document.getElementById('editingOutingId').value;
+            let place = document.getElementById('outingPlace').value.trim();
+            let date = document.getElementById('outingDate').value;
+            let notes = document.getElementById('outingNotes').value.trim();
+
+            if (!place || !date) { alert("يرجى تعبئة مكان وتاريخ المشوار."); return; }
+
+            let activeId = localStorage.getItem('activeUniversalUser');
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+
+            if (editId) {
+                let item = allUsers[activeId].outings.find(o => o.id == editId);
+                if (item) { item.place = place; item.date = date; item.notes = notes; }
+                document.getElementById('editingOutingId').value = '';
+                document.getElementById('outingSubmitBtn').innerText = 'إضافة المشوار للجدول 🗺️';
+            } else {
+                allUsers[activeId].outings.unshift({ id: Date.now(), place, date, notes, done: false });
+            }
+
+            localStorage.setItem('allUniversalUsersDB', JSON.stringify(allUsers));
+            document.getElementById('outingPlace').value = '';
+            document.getElementById('outingDate').value = '';
+            document.getElementById('outingNotes').value = '';
+            refreshAllData(activeId);
+        }
+
+        function editOuting(id) {
+            openSection('outings');
+            let activeId = localStorage.getItem('activeUniversalUser');
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+            let item = allUsers[activeId].outings.find(o => o.id == id);
+            if (item) {
+                document.getElementById('editingOutingId').value = item.id;
+                document.getElementById('outingPlace').value = item.place;
+                document.getElementById('outingDate').value = item.date;
+                document.getElementById('outingNotes').value = item.notes;
+                document.getElementById('outingSubmitBtn').innerText = 'حفظ التعديلات 🔄';
+            }
+        }
+
+        function displayOutings(outings) {
+            let container = document.getElementById('outingsList');
+            if (!outings || outings.length === 0) {
+                container.innerHTML = '<p style="text-align: center; opacity: 0.6;">لا توجد مشاوير مسجلة.</p>';
+                return;
+            }
+            container.innerHTML = outings.map(o => `
+                <div class="item-card ${o.done ? 'completed' : ''}" style="border-right-color: #2980b9;">
+                    <div class="item-details">
+                        <h3 class="item-title">🚗 المكان: ${o.place} ${o.done ? '<span class="badge badge-done">تم المشوار ✅</span>' : ''}</h3>
+                        <p>📅 <strong>الموعد:</strong> ${o.date}</p>
+                        <p>📝 <strong>ملاحظات:</strong> ${o.notes || 'لا توجد'}</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-sm btn-done" onclick="toggleDone('outings', ${o.id})">${o.done ? 'إلغاء' : 'تم ✅'}</button>
+                        <button class="btn-sm btn-edit" onclick="editOuting(${o.id})">تعديل ✍️</button>
+                        <button class="btn-sm btn-delete" onclick="deleteItem('outings', ${o.id})">حذف 🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- Calendar Generator ---
+        function buildMasterCalendar(user) {
+            let grid = document.getElementById('masterCalendarGrid');
+            let daysNames = ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'];
+            let html = daysNames.map(d => `<div class="calendar-day-name">${d}</div>`).join('');
+
+            let year = 2026, month = 9; // October 2026
+            let firstDay = new Date(year, month, 1).getDay();
+            let totalDays = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDay; i++) {
+                html += `<div class="calendar-cell" style="opacity: 0.3; pointer-events: none;"></div>`;
+            }
+
+            for (let day = 1; day <= totalDays; day++) {
+                let dayFormatted = day < 10 ? '0' + day : day;
+                let dateStr = `2026-10-${dayFormatted}`;
+
+                let dayExams = user.exams.filter(e => e.date === dateStr);
+                let dayCooking = user.cooking.filter(c => c.date === dateStr);
+                let dayOutings = user.outings.filter(o => o.date === dateStr);
+
+                let hasExam = dayExams.length > 0;
+                let hasEvents = (dayCooking.length + dayOutings.length) > 0;
+
+                let evHTML = '';
+                if (hasExam) evHTML += `<div class="day-status-indicator status-exam">امتحان 📚</div>`;
+                else if (hasEvents) evHTML += `<div class="day-status-indicator status-event">نشاط 🚗</div>`;
+
+                dayExams.forEach(m => evHTML += `<div class="calendar-event" style="background:${m.color};">📚 ${m.subject}</div>`);
+                dayCooking.forEach(c => evHTML += `<div class="calendar-event" style="background:#e67e22;">🍳 ${c.name}</div>`);
+                dayOutings.forEach(o => evHTML += `<div class="calendar-event" style="background:#2980b9;">🚗 ${o.place}</div>`);
+
+                html += `
+                    <div class="calendar-cell ${hasExam ? 'has-exam' : ''}">
+                        <span class="day-num">${day}</span>
+                        ${evHTML}
+                    </div>
+                `;
+            }
+            grid.innerHTML = html;
+
+            // Render Home Quick Tasks
+            let tasksContainer = document.getElementById('homeTasksList');
+            if (!user.tasks || user.tasks.length === 0) {
+                tasksContainer.innerHTML = '<p style="text-align: center; opacity: 0.6; font-size: 13px;">لا توجد مهام حالياً.</p>';
+            } else {
+                tasksContainer.innerHTML = user.tasks.map(t => `
+                    <div class="item-card ${t.done ? 'completed' : ''}" style="margin-bottom: 8px;">
+                        <div class="item-details">
+                            <h3 class="item-title">✅ ${t.name} ${t.done ? '<span class="badge badge-done">مكتملة ✅</span>' : ''}</h3>
+                            <p>${t.notes || ''}</p>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-sm btn-done" onclick="toggleDone('tasks', ${t.id})">${t.done ? 'إلغاء' : 'تم ✅'}</button>
+                            <button class="btn-sm btn-edit" onclick="editTask(${t.id})">تعديل ✍️</button>
+                            <button class="btn-sm btn-delete" onclick="deleteItem('tasks', ${t.id})">حذف 🗑️</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('rememberUserFlag');
+            localStorage.removeItem('activeUniversalUser');
+            document.getElementById('appScreen').style.display = 'none';
+            document.getElementById('authScreen').style.display = 'flex';
+        }
+    </script>
 </body>
 </html>
