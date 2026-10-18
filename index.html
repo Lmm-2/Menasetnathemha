@@ -418,93 +418,139 @@
             word-break: break-word;
         }
 
-        /* تنسيق الجداول والطباعة الاحترافية */
-        .table-responsive-wrapper {
+        /* ----------------------------------------- */
+        /* تصميم ورقة A4 المزخرفة والمخصصة لجدول الحصص */
+        /* ----------------------------------------- */
+        .printable-sheet-wrapper {
             width: 100%;
-            overflow-x: auto;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
+            background: #ffffff;
+            padding: 15mm 12mm;
+            border: 4px solid #b5838d;
+            border-radius: 14px;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             margin-top: 10px;
-            -webkit-overflow-scrolling: touch;
         }
 
-        .printable-container {
-            width: 100%;
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
+        .printable-sheet-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            bottom: 6px;
+            left: 6px;
+            right: 6px;
+            border: 1.5px dashed #e5989b;
+            border-radius: 9px;
+            pointer-events: none;
         }
 
-        .schedule-table {
+        .sheet-header {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .sheet-title {
+            display: inline-block;
+            background: linear-gradient(135deg, #b5838d, #e5989b);
+            color: white;
+            padding: 5px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 800;
+            box-shadow: 0 3px 10px rgba(181, 131, 141, 0.3);
+        }
+
+        .schedule-table-custom {
             width: 100%;
             border-collapse: collapse;
             background: white;
-            min-width: 500px;
+            margin-top: 5px;
         }
 
-        .schedule-table th, .schedule-table td {
-            border: 1.5px solid #333;
+        .schedule-table-custom th, .schedule-table-custom td {
+            border: 2px solid #d8b4a0;
             padding: 8px 4px;
             text-align: center;
-            font-size: 12px;
-            word-break: break-word;
+            vertical-align: middle;
         }
 
-        .schedule-table th {
+        .schedule-table-custom th {
+            background-color: #6d597a !important;
             color: white !important;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 800;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
         }
 
+        .schedule-table-custom td.day-cell {
+            background-color: #f7ede2 !important;
+            font-weight: 800;
+            color: #6d597a;
+            font-size: 14px;
+            width: 12%;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        .schedule-table-custom td input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #3d2b1f;
+            outline: none;
+            margin: 0;
+            padding: 4px;
+        }
+
+        .schedule-table-custom td input:focus {
+            background: #fff1f2;
+            border-radius: 4px;
+        }
+
+        .sheet-footer {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #b5838d;
+            margin-top: 12px;
+        }
+
         @page {
             size: A4 landscape;
-            margin: 10mm;
+            margin: 0;
         }
 
         @media print {
             body {
                 background: white !important;
                 color: black !important;
+                padding: 0 !important;
             }
             body * {
                 visibility: hidden;
             }
-            #printableArea, #printableArea * {
+            #printableSheetArea, #printableSheetArea * {
                 visibility: visible;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            #printableArea {
+            #printableSheetArea {
                 position: absolute;
                 left: 0;
                 top: 0;
-                width: 100% !important;
-                height: 100% !important;
+                width: 297mm !important;
+                height: 210mm !important;
                 margin: 0 !important;
-                padding: 5mm !important;
+                padding: 12mm 15mm !important;
                 box-sizing: border-box;
-            }
-            .table-responsive-wrapper {
-                border: none !important;
-                overflow: visible !important;
-            }
-            .schedule-table {
-                width: 100% !important;
-                min-width: 100% !important;
-                border: 2px solid #000 !important;
-            }
-            .schedule-table th {
-                padding: 14px 8px !important;
-                font-size: 15px !important;
-                color: white !important;
-            }
-            .schedule-table td {
-                padding: 16px 8px !important;
-                font-size: 14px !important;
-                font-weight: bold !important;
-                color: #000 !important;
+                border: 4px solid #b5838d !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                background: white !important;
             }
             .no-print {
                 display: none !important;
@@ -598,7 +644,7 @@
 </head>
 <body id="mainBody">
 
-    <div class="top-header-wrapper">
+    <div class="top-header-wrapper no-print">
         <div class="ticker-wrap">
             <div class="ticker-move">
                 <div class="ticker-item" id="tickerMsg1">✨ مرحباً بكِ في موقع نَظِّمْها الذكي &nbsp;•&nbsp; 💡 "النجاح يبدأ بتنظيم خطوتكِ الأولى" &nbsp;•&nbsp; 📚 نسّقي امتحاناتكِ وحصصكِ المدرسية بكل سهولة!</div>
@@ -617,7 +663,7 @@
     </div>
 
     <!-- شاشة تسجيل الدخول -->
-    <div id="authScreen" style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex: 1; width: 100%; padding: 15px; max-width: 420px; margin: auto;">
+    <div id="authScreen" class="no-print" style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex: 1; width: 100%; padding: 15px; max-width: 420px; margin: auto;">
         <div class="card" style="width: 100%; text-align: center;">
             <h2>✨ أهلاً بكِ في موقع نَظِّمْها</h2>
             <p style="margin-bottom: 12px; font-size: 12px; opacity: 0.8;" id="authSubtitle">سجّلي دخولكِ للبدء بتنظيم جدولكِ الذكي 👩</p>
@@ -645,7 +691,7 @@
 
         <div class="container">
 
-            <div id="homeSectionsView">
+            <div id="homeSectionsView" class="no-print">
                 
                 <div class="banner-slider-wrapper">
                     <div class="banner-slide active" id="slide1">
@@ -656,7 +702,7 @@
 
                     <div class="banner-slide" id="slide2">
                         <h3>🗓️ جدول الحصص الأسبوعي</h3>
-                        <p id="slide2Desc">أدخلي أيام دوامك وحصصك واختاري التصميم والثيم المناسب للطباعة!</p>
+                        <p id="slide2Desc">أدخلي أيام دوامك وحصصك واختاري التصميم المزخرف الجاهز للطباعة!</p>
                         <button class="banner-btn" onclick="openSection('schoolSchedule')" id="slide2Btn">إنشاء الجدول 🖨️</button>
                     </div>
 
@@ -726,7 +772,7 @@
             </div>
 
             <!-- 1. الامتحانات -->
-            <div id="examsSection" style="display: none;" class="card">
+            <div id="examsSection" style="display: none;" class="card no-print">
                 <button class="back-nav-btn" onclick="backToHome()" id="backHomeExam">⬅ العودة للرئيسية</button>
                 <h2>📚 قسم الدراسة والامتحانات</h2>
                 
@@ -754,7 +800,7 @@
             </div>
 
             <!-- 2. مولد الجدول الدراسي -->
-            <div id="studyPlannerSection" style="display: none;" class="card">
+            <div id="studyPlannerSection" style="display: none;" class="card no-print">
                 <button class="back-nav-btn" onclick="backToHome()">⬅ العودة للرئيسية</button>
                 <h2>📊 مولّد جدول الدراسة والتصدير</h2>
                 
@@ -774,13 +820,12 @@
                 <div id="generatedScheduleOutput"></div>
             </div>
 
-            <!-- 3. جدول الحصص المدرسية (المُحدث مع الحفظ التلقائي وأيام الدوام) -->
+            <!-- 3. جدول الحصص المدرسية (التصميم المزخرف بملء A4 مع زر الحفظ والطباعة) -->
             <div id="schoolScheduleSection" style="display: none;" class="card">
-                <button class="back-nav-btn" onclick="backToHome()">⬅ العودة للرئيسية</button>
-                <h2>🗓️ جدول الحصص المدرسية</h2>
+                <button class="back-nav-btn no-print" onclick="backToHome()">⬅ العودة للرئيسية</button>
+                <h2 class="no-print">🗓️ جدول الحصص الأسبوعي المزخرف</h2>
                 
-                <div style="background: var(--input-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px;">
-                    
+                <div class="no-print" style="background: var(--input-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px;">
                     <label style="font-size: 12px; font-weight: bold; display: block; margin-bottom: 4px;">اختر أيام الدوام الأسبوعي:</label>
                     <select id="workDaysSelect" onchange="setupSchoolGrid()" style="margin-bottom: 8px; font-weight: bold;">
                         <option value="sun-thu">من الأحد إلى الخميس</option>
@@ -799,30 +844,32 @@
                             </select>
                         </div>
                         <div>
-                            <label style="font-size: 11px; font-weight: bold;">ثيم/لون الجدول:</label>
-                            <select id="scheduleTheme">
-                                <option value="classic">كلاسيكي 🟤</option>
-                                <option value="pastel">ربيعي وردي 🌸</option>
-                                <option value="purple">بنفسجي هادئ 💜</option>
-                                <option value="modern">حديث أزرق 🔵</option>
-                                <option value="emerald">زمردي أخضر 💚</option>
-                            </select>
+                            <label style="font-size: 11px; font-weight: bold;">أيام الدوام:</label>
+                            <button class="action-btn" onclick="saveSchoolScheduleToProfile()" style="background: var(--accent-green); width: 100%; margin-top: 2px;">حفظ الجدول في الحساب 💾</button>
                         </div>
-                    </div>
-
-                    <div id="schoolInputsGrid" style="overflow-x: auto; margin-top: 8px;"></div>
-                    
-                    <div style="display: flex; gap: 8px; margin-top: 10px;">
-                        <button class="action-btn" onclick="saveSchoolScheduleToProfile()" style="background: var(--accent-green); flex: 1;">حفظ الجدول 💾</button>
-                        <button class="action-btn" onclick="saveAndGenerateSchoolSchedule()" style="flex: 2;">توليد وعرض الجدول 🖨️</button>
                     </div>
                 </div>
 
-                <div id="schoolScheduleOutput"></div>
+                <!-- مساحة ورقة الـ A4 المزخرفة القابلة للطباعة والتعبئة الفورية -->
+                <div id="printableSheetArea" class="printable-sheet-wrapper">
+                    <div class="sheet-header">
+                        <div class="sheet-title">✨ جدول الحصص الأسبوعي ✨</div>
+                    </div>
+
+                    <div id="schoolInputsGrid" style="width: 100%;"></div>
+
+                    <div class="sheet-footer">
+                        🤍 "لا تأتي لذة النجاح إلا بعد الصبر على مر الكفاة" - موفقة في دراستكِ! 🤍
+                    </div>
+                </div>
+
+                <div class="no-print" style="margin-top: 15px; text-align: center;">
+                    <button class="action-btn" onclick="window.print()" style="padding: 12px 30px; font-size: 15px;">طباعة الجدول بملء ورقة A4 🖨️✨</button>
+                </div>
             </div>
 
             <!-- 4. مساعد الفاينل -->
-            <div id="finalsWizardSection" style="display: none;" class="card">
+            <div id="finalsWizardSection" style="display: none;" class="card no-print">
                 <button class="back-nav-btn" onclick="backToHome()">⬅ العودة للرئيسية</button>
                 <h2>⚡ مُنسق الفاينل الذكي</h2>
                 
@@ -856,7 +903,7 @@
             </div>
 
             <!-- 5. الطبخ والأكلات -->
-            <div id="cookingSection" style="display: none;" class="card">
+            <div id="cookingSection" style="display: none;" class="card no-print">
                 <button class="back-nav-btn" onclick="backToHome()">⬅ العودة للرئيسية</button>
                 <h2>🍳 قسم الطبخ والأكلات</h2>
                 
@@ -874,7 +921,7 @@
             </div>
 
             <!-- 6. المشاوير -->
-            <div id="outingsSection" style="display: none;" class="card">
+            <div id="outingsSection" style="display: none;" class="card no-print">
                 <button class="back-nav-btn" onclick="backToHome()">⬅ العودة للرئيسية</button>
                 <h2>🚗 قسم المشاوير والطلعات</h2>
                 
@@ -892,7 +939,7 @@
             </div>
 
             <!-- 7. المهام اليومية -->
-            <div id="tasksSection" style="display: none;" class="card">
+            <div id="tasksSection" style="display: none;" class="card no-print">
                 <button class="back-nav-btn" onclick="backToHome()">⬅ العودة للرئيسية</button>
                 <h2>✅ قسم المهام اليومية</h2>
                 
@@ -909,7 +956,7 @@
 
         </div>
 
-        <div class="bottom-nav">
+        <div class="bottom-nav no-print">
             <div class="nav-item active" onclick="backToHome()">
                 <span class="nav-item-icon">🏠</span>
                 <span id="navHomeText">الرئيسية</span>
@@ -931,7 +978,7 @@
             </div>
         </div>
 
-        <footer>
+        <footer class="no-print">
             <p>© 2026 موقع نَظِّمْها الذكي - جميع الحقوق محفوظة</p>
             <p style="font-size: 11px; opacity: 0.9; margin-top: 2px;" id="footerCredit">فكرة وتصميم وإشراف: لُجين 🤍</p>
         </footer>
@@ -1176,13 +1223,13 @@
                 <p><strong>1. التقويم التفاعلي:</strong> يمكنكِ التنقل بين الأشهر والسنوات بدءاً من عام 2026، وانقري على أي يوم لعرض كافة تفاصيل امتحاناتكِ وأنشطتكِ المسجلة فيه مرة واحدة.</p>
                 <p><strong>2. قسم الامتحانات:</strong> أضيفي امتحاناتكِ مع اختيار لون المادة، وسيظهر وسم "نفذ الوقت ⌛" تلقائياً إن انتهى تاريخ الامتحان دون إتمامه.</p>
                 <p><strong>3. مساعد الفاينل الذكي:</strong> أدخلي امتحاناتكِ وساعات دراستكِ اليومية لتوليدي خطة دراسية متوازنة للفاينل وقابلة للطباعة.</p>
-                <p><strong>4. جدول الحصص المدرسية:</strong> حددي أيام دوام دولتكِ وأدخلي حصصكِ واضغطي "حفظ الجدول" ليبقى محفوظاً دائماً.</p>
+                <p><strong>4. جدول الحصص المدرسية:</strong> جدول مزخرف يملأ ورقة A4 بالكامل، يمكنكِ تعبئته والضغط على "حفظ الجدول في الحساب" ليبقى محفوظاً دائماً.</p>
                 <p><strong>5. الإضافة السريعة (➕):</strong> اضغطي الزر في منتصف الشريط السفلي لإضافة أي مهمة أو مشوار بضغطة واحدة.</p>
             ` : `
                 <p><strong>1. التقويم التفاعلي:</strong> يمكنك التنقل بين الأشهر والسنوات بدءاً من عام 2026، وانقر على أي يوم لعرض كافة تفاصيل امتحاناتك وأنشطتك المسجلة فيه مرة واحدة.</p>
                 <p><strong>2. قسم الامتحانات:</strong> أضف امتحاناتك مع اختيار لون المادة، وسيظهر وسم "نفذ الوقت ⌛" تلقائياً إن انتهى تاريخ الامتحان دون إتمامه.</p>
                 <p><strong>3. مساعد الفاينل الذكي:</strong> أدخل امتحاناتك وساعات دراستك اليومية لتوليد خطة دراسية متوازنة للفاينل وقابلة للطباعة.</p>
-                <p><strong>4. جدول الحصص المدرسية:</strong> حدد أيام دوام دولتك وأدخل حصصك واضغط "حفظ الجدول" ليبقى محفوظاً دائماً.</p>
+                <p><strong>4. جدول الحصص المدرسية:</strong> جدول مزخرف يملأ ورقة A4 بالكامل، يمكنك تعبئته والضغط على "حفظ الجدول في الحساب" ليبقى محفوظاً دائماً.</p>
                 <p><strong>5. الإضافة السريعة (➕):</strong> اضغط الزر في منتصف الشريط السفلي لإضافة أي مهمة أو مشوار بضغطة واحدة.</p>
             `;
 
@@ -1609,25 +1656,23 @@
             let periods = parseInt(document.getElementById('periodsCount').value);
             let days = getSelectedDaysList();
             
-            let html = `<table style="width: 100%; border-collapse: collapse; font-size: 10px;">
+            let html = `<table class="schedule-table-custom">
                 <thead>
-                    <tr style="background: var(--nav-bg); color: white;">
-                        <th style="padding: 4px; border: 1px solid var(--border-color);">اليوم / الحصة</th>`;
-            for (let p = 1; p <= periods; p++) html += `<th style="padding: 4px; border: 1px solid var(--border-color);">حصة ${p}</th>`;
+                    <tr>
+                        <th>اليوم / الحصة</th>`;
+            for (let p = 1; p <= periods; p++) html += `<th>الحصة ${p}</th>`;
             html += `</tr></thead><tbody>`;
 
             days.forEach((day, dIdx) => {
-                html += `<tr><td style="font-weight: bold; padding: 4px; border: 1px solid var(--border-color);">${day}</td>`;
+                html += `<tr><td class="day-cell">${day}</td>`;
                 for (let p = 1; p <= periods; p++) {
-                    html += `<td style="border: 1px solid var(--border-color); padding: 2px;"><input type="text" class="sch-input" data-day="${dIdx}" data-period="${p}" style="padding: 2px; font-size: 10px; margin: 0; border: none; text-align: center;"></td>`;
+                    html += `<td><input type="text" class="sch-input" data-day="${dIdx}" data-period="${p}" placeholder="..."></td>`;
                 }
                 html += `</tr>`;
             });
             html += `</tbody></table>`;
 
             document.getElementById('schoolInputsGrid').innerHTML = html;
-
-            // استرجاع الجدول المحفوظ إن وجد
             loadSchoolScheduleFromProfile();
         }
 
@@ -1637,13 +1682,11 @@
 
             let periods = parseInt(document.getElementById('periodsCount').value);
             let workDays = document.getElementById('workDaysSelect').value;
-            let theme = document.getElementById('scheduleTheme').value;
             let days = getSelectedDaysList();
 
             let scheduleData = {
                 periods: periods,
                 workDays: workDays,
-                theme: theme,
                 cells: {}
             };
 
@@ -1676,9 +1719,8 @@
             if (sch.workDays) document.getElementById('workDaysSelect').value = sch.workDays;
             if (sch.periods) {
                 document.getElementById('periodsCount').value = sch.periods;
-                setupSchoolGrid(); // إعادة بناء الجدول ليتطابق مع عدد الحصص وأيام الدوام
+                // إعادة رسم الجدول بالعدد المحفوظ دون إعادة التحميل بشكل متكرر
             }
-            if (sch.theme) document.getElementById('scheduleTheme').value = sch.theme;
 
             if (sch.cells) {
                 for (let key in sch.cells) {
@@ -1691,51 +1733,6 @@
                     }
                 }
             }
-        }
-
-        function saveAndGenerateSchoolSchedule() {
-            // حفظ تلقائي عند التوليد أيضاً لضمان راحة المستخدم
-            saveSchoolScheduleToProfile();
-
-            let periods = parseInt(document.getElementById('periodsCount').value);
-            let theme = document.getElementById('scheduleTheme').value;
-            let days = getSelectedDaysList();
-            
-            let themeColors = {
-                'classic': '#8b5e3c',
-                'pastel': '#b56576',
-                'purple': '#8e44ad',
-                'modern': '#2c3e50',
-                'emerald': '#16a085'
-            };
-
-            let headerBg = themeColors[theme] || '#8b5e3c';
-
-            let html = `
-                <div id="printableArea" class="printable-container">
-                    <h2 style="text-align: center; color: ${headerBg}; margin-bottom: 12px; font-size: 20px;">🗓️ جدول الحصص الأسبوعي</h2>
-                    <div class="table-responsive-wrapper">
-                        <table class="schedule-table">
-                            <thead>
-                                <tr style="background-color: ${headerBg} !important;">
-                                    <th style="background-color: ${headerBg} !important; color: white !important;">اليوم</th>`;
-            for (let p = 1; p <= periods; p++) html += `<th style="background-color: ${headerBg} !important; color: white !important;">الحصة ${p}</th>`;
-            html += `</tr></thead><tbody>`;
-
-            days.forEach((day, dIdx) => {
-                html += `<tr><td style="font-weight: bold; background: #fdfbf7; color: #3d2b1f;">${day}</td>`;
-                for (let p = 1; p <= periods; p++) {
-                    let input = document.querySelector(`.sch-input[data-day="${dIdx}"][data-period="${p}"]`);
-                    let val = input ? input.value.trim() : '';
-                    html += `<td>${val || '-'}</td>`;
-                }
-                html += `</tr>`;
-            });
-
-            html += `</tbody></table></div></div>
-                <button class="action-btn no-print" onclick="window.print()" style="width: 100%; margin-top: 10px;">طباعة الجدول 🖨️</button>`;
-
-            document.getElementById('schoolScheduleOutput').innerHTML = html;
         }
 
         function addWizardRow() {
