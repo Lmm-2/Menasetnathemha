@@ -417,6 +417,56 @@
             word-break: break-word;
         }
 
+        /* تنسيق الجداول المطبوعة لتملأ الصفحة بالكامل بوضوح وأناقة */
+        .printable-container {
+            width: 100%;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: white;
+        }
+
+        .schedule-table th, .schedule-table td {
+            border: 1.5px solid #333;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .schedule-table th {
+            color: white;
+            font-size: 15px;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printableArea, #printableArea * {
+                visibility: visible;
+            }
+            #printableArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100% !important;
+                height: 100% !important;
+                padding: 10mm;
+                margin: 0;
+                box-shadow: none;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -880,7 +930,6 @@
             initCalDropdowns();
             startAutoSlider();
 
-            // فحص ميزة "تذكّرني" والدخول التلقائي مباشرة
             if (rememberUser === 'true' && activeUser) {
                 let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
                 if (allUsers[activeUser]) {
@@ -918,11 +967,6 @@
         function closeDayDetailModal() { document.getElementById('dayDetailModal').style.display = 'none'; }
 
         function showDayDetails(dateStr, exams, cooking, outings) {
-            let activeId = localStorage.getItem('activeUniversalUser');
-            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
-            let user = allUsers[activeId] || { gender: 'female' };
-            let isFemale = user.gender === 'female';
-
             document.getElementById('dayDetailDateTitle').innerText = `أنشطة يوم ${dateStr} 📅`;
             let contentHtml = '';
 
@@ -1448,7 +1492,7 @@
                     <p style="text-align: center; font-size: 11px; opacity: 0.8; margin-bottom: 10px;">منصة نَظِّمْها الذكية</p>
                     <table class="schedule-table">
                         <thead>
-                            <tr>
+                            <tr style="background: var(--nav-bg);">
                                 <th>#</th>
                                 <th>المادة</th>
                                 <th>الموضوع / الجزء المطلوب</th>
@@ -1519,7 +1563,7 @@
             let theme = document.getElementById('scheduleTheme').value;
             let days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
             
-            let headerBg = theme === 'classic' ? '#8b5e3c' : (theme === 'pastel' ? '#b56576' : '#2c3e50');
+            let headerBg = theme === 'classic' ? '#8b5e3c' : (theme === 'pastel' ? '#b56576' : '#3498db');
 
             let html = `
                 <div id="printableArea" class="printable-container">
@@ -1579,7 +1623,7 @@
             planHtml += `
                 <table class="schedule-table">
                     <thead>
-                        <tr>
+                        <tr style="background: var(--nav-bg);">
                             <th>المادة</th>
                             <th>تاريخ الامتحان</th>
                             <th>أيام الدراسة المقترحة</th>
