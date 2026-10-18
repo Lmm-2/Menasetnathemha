@@ -418,7 +418,7 @@
             word-break: break-word;
         }
 
-        /* حاوية الجدول المرنة لتجنب البروز خارج الشاشة في الموبايل */
+        /* تنسيق الجداول والاحتواء المرن */
         .table-responsive-wrapper {
             width: 100%;
             overflow-x: auto;
@@ -439,7 +439,7 @@
             width: 100%;
             border-collapse: collapse;
             background: white;
-            min-width: 500px; /* لضمان التنسيق في الموبايل */
+            min-width: 500px;
         }
 
         .schedule-table th, .schedule-table td {
@@ -454,15 +454,14 @@
             color: white !important;
             font-size: 12px;
             font-weight: 800;
-            /* إجبار المتصفح والموبايل على إظهار خلفية الثيم بالألوان */
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
         }
 
-        /* إعدادات الطباعة الشاملة لجعل الصفحة بالعرض وتملأ الـ PDF بالألوان */
+        /* إعدادات متطورة للطباعة لتملأ صفحة الـ PDF بالألوان والعرض المناسب */
         @page {
             size: A4 landscape;
-            margin: 5mm;
+            margin: 10mm;
         }
 
         @media print {
@@ -483,8 +482,10 @@
                 left: 0;
                 top: 0;
                 width: 100% !important;
+                height: 100% !important;
                 margin: 0 !important;
-                padding: 0 !important;
+                padding: 5mm !important;
+                box-sizing: border-box;
             }
             .table-responsive-wrapper {
                 border: none !important;
@@ -493,15 +494,18 @@
             .schedule-table {
                 width: 100% !important;
                 min-width: 100% !important;
+                border: 2px solid #000 !important;
             }
             .schedule-table th {
-                padding: 12px 6px !important;
-                font-size: 14px !important;
+                padding: 14px 8px !important;
+                font-size: 15px !important;
+                color: white !important;
             }
             .schedule-table td {
-                padding: 14px 6px !important;
-                font-size: 13px !important;
+                padding: 16px 8px !important;
+                font-size: 14px !important;
                 font-weight: bold !important;
+                color: #000 !important;
             }
             .no-print {
                 display: none !important;
@@ -790,11 +794,11 @@
                         <div>
                             <label style="font-size: 11px; font-weight: bold;">ثيم/لون الجدول:</label>
                             <select id="scheduleTheme">
-                                <option value="classic">كلاسيكي 🟤 (#8b5e3c)</option>
-                                <option value="pastel">ربيعي 🌸 (#b56576)</option>
-                                <option value="modern">حديث 🔵 (#2c3e50)</option>
-                                <option value="purple">بنفسجي 💜 (#8e44ad)</option>
-                                <option value="emerald">زمردي 💚 (#16a085)</option>
+                                <option value="classic">كلاسيكي 🟤</option>
+                                <option value="pastel">ربيعي 🌸</option>
+                                <option value="modern">حديث 🔵</option>
+                                <option value="purple">بنفسجي 💜</option>
+                                <option value="emerald">زمردي 💚</option>
                             </select>
                         </div>
                     </div>
@@ -1602,7 +1606,7 @@
             document.getElementById('schoolInputsGrid').innerHTML = html;
         }
 
-        // الربط المباشر للون الثيم مع تفعيل خلفية الطباعة
+        // توليد جدول الحصص مع تلوين الألوان بشكل كامل عند الطباعة
         function saveAndGenerateSchoolSchedule() {
             let periods = parseInt(document.getElementById('periodsCount').value);
             let theme = document.getElementById('scheduleTheme').value;
@@ -1620,17 +1624,17 @@
 
             let html = `
                 <div id="printableArea" class="printable-container">
-                    <h2 style="text-align: center; color: ${headerBg}; margin-bottom: 8px;">🗓️ جدول الحصص الأسبوعي</h2>
+                    <h2 style="text-align: center; color: ${headerBg}; margin-bottom: 12px; font-size: 20px;">🗓️ جدول الحصص الأسبوعي</h2>
                     <div class="table-responsive-wrapper">
                         <table class="schedule-table">
                             <thead>
-                                <tr style="background-color: ${headerBg} !important; color: white !important;">
+                                <tr style="background-color: ${headerBg} !important;">
                                     <th style="background-color: ${headerBg} !important; color: white !important;">اليوم</th>`;
             for (let p = 1; p <= periods; p++) html += `<th style="background-color: ${headerBg} !important; color: white !important;">الحصة ${p}</th>`;
             html += `</tr></thead><tbody>`;
 
             days.forEach((day, dIdx) => {
-                html += `<tr><td style="font-weight: bold; background: #f9f9f9;">${day}</td>`;
+                html += `<tr><td style="font-weight: bold; background: #fdfbf7; color: #3d2b1f;">${day}</td>`;
                 for (let p = 1; p <= periods; p++) {
                     let input = document.querySelector(`.sch-input[data-day="${dIdx}"][data-period="${p}"]`);
                     let val = input ? input.value.trim() : '';
