@@ -419,29 +419,18 @@
         }
 
         /* ----------------------------------------- */
-        /* تصميم ورقة A4 المزخرفة والمخصصة لجدول الحصص */
+        /* ورقة A4 المخصصة القوية المتوافقة مع الجوال */
         /* ----------------------------------------- */
         .printable-sheet-wrapper {
             width: 100%;
             background: #ffffff;
-            padding: 15mm 12mm;
-            border: 4px solid #b5838d;
-            border-radius: 14px;
+            padding: 15px;
+            border: 3px solid #b5838d;
+            border-radius: 12px;
             position: relative;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             margin-top: 10px;
-        }
-
-        .printable-sheet-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 6px;
-            bottom: 6px;
-            left: 6px;
-            right: 6px;
-            border: 1.5px dashed #e5989b;
-            border-radius: 9px;
-            pointer-events: none;
+            overflow-x: auto;
         }
 
         .sheet-header {
@@ -453,23 +442,22 @@
             display: inline-block;
             background: linear-gradient(135deg, #b5838d, #e5989b);
             color: white;
-            padding: 5px 30px;
+            padding: 6px 28px;
             border-radius: 25px;
             font-size: 18px;
             font-weight: 800;
-            box-shadow: 0 3px 10px rgba(181, 131, 141, 0.3);
         }
 
         .schedule-table-custom {
             width: 100%;
             border-collapse: collapse;
             background: white;
-            margin-top: 5px;
+            min-width: 550px;
         }
 
         .schedule-table-custom th, .schedule-table-custom td {
             border: 2px solid #d8b4a0;
-            padding: 8px 4px;
+            padding: 10px 4px;
             text-align: center;
             vertical-align: middle;
         }
@@ -502,13 +490,6 @@
             font-weight: 600;
             color: #3d2b1f;
             outline: none;
-            margin: 0;
-            padding: 4px;
-        }
-
-        .schedule-table-custom td input:focus {
-            background: #fff1f2;
-            border-radius: 4px;
         }
 
         .sheet-footer {
@@ -519,39 +500,65 @@
             margin-top: 12px;
         }
 
+        /* الطباعة المحترفة والمجهزة خصيصاً للجوالات */
         @page {
             size: A4 landscape;
-            margin: 0;
+            margin: 0 !important;
         }
 
         @media print {
-            body {
-                background: white !important;
-                color: black !important;
+            html, body {
+                width: 100% !important;
+                height: 100% !important;
+                margin: 0 !important;
                 padding: 0 !important;
+                background: white !important;
             }
+            
             body * {
-                visibility: hidden;
+                visibility: hidden !important;
             }
+
             #printableSheetArea, #printableSheetArea * {
-                visibility: visible;
+                visibility: visible !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
+
             #printableSheetArea {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 297mm !important;
-                height: 210mm !important;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
                 margin: 0 !important;
-                padding: 12mm 15mm !important;
-                box-sizing: border-box;
-                border: 4px solid #b5838d !important;
+                padding: 15mm 20mm !important;
+                box-sizing: border-box !important;
+                border: 5px solid #b5838d !important;
                 border-radius: 0 !important;
                 box-shadow: none !important;
                 background: white !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
             }
+
+            .schedule-table-custom {
+                min-width: 100% !important;
+                width: 100% !important;
+                height: 80% !important;
+            }
+
+            .schedule-table-custom th {
+                padding: 16px 8px !important;
+                font-size: 16px !important;
+            }
+
+            .schedule-table-custom td {
+                padding: 18px 8px !important;
+                font-size: 15px !important;
+            }
+
             .no-print {
                 display: none !important;
             }
@@ -820,7 +827,7 @@
                 <div id="generatedScheduleOutput"></div>
             </div>
 
-            <!-- 3. جدول الحصص المدرسية (التصميم المزخرف بملء A4 مع زر الحفظ والطباعة) -->
+            <!-- 3. جدول الحصص المدرسية (التصميم المزخرف) -->
             <div id="schoolScheduleSection" style="display: none;" class="card">
                 <button class="back-nav-btn no-print" onclick="backToHome()">⬅ العودة للرئيسية</button>
                 <h2 class="no-print">🗓️ جدول الحصص الأسبوعي المزخرف</h2>
@@ -844,13 +851,13 @@
                             </select>
                         </div>
                         <div>
-                            <label style="font-size: 11px; font-weight: bold;">أيام الدوام:</label>
+                            <label style="font-size: 11px; font-weight: bold;">الحفظ:</label>
                             <button class="action-btn" onclick="saveSchoolScheduleToProfile()" style="background: var(--accent-green); width: 100%; margin-top: 2px;">حفظ الجدول في الحساب 💾</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- مساحة ورقة الـ A4 المزخرفة القابلة للطباعة والتعبئة الفورية -->
+                <!-- مساحة ورقة الـ A4 المزخرفة -->
                 <div id="printableSheetArea" class="printable-sheet-wrapper">
                     <div class="sheet-header">
                         <div class="sheet-title">✨ جدول الحصص الأسبوعي ✨</div>
@@ -980,7 +987,7 @@
 
         <footer class="no-print">
             <p>© 2026 موقع نَظِّمْها الذكي - جميع الحقوق محفوظة</p>
-            <p style="font-size: 11px; opacity: 0.9; margin-top: 2px;" id="footerCredit">فكرة وتصميم وإشراف: لُجين 🤍</p>
+            <p style="font-size: 11px; opacity: 0.9; margin-top: 2px;" id="footerCredit">فكرة وتصميم وإشراف: لُجين 🤍[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span)</p>
         </footer>
     </div>
 
@@ -1220,17 +1227,17 @@
             document.getElementById('quickAddTitle').innerText = isFemale ? "أضيفي نشاطاً سريعاً ✨" : "أضف نشاطاً سريعاً ✨";
 
             document.getElementById('guideModalBody').innerHTML = isFemale ? `
-                <p><strong>1. التقويم التفاعلي:</strong> يمكنكِ التنقل بين الأشهر والسنوات بدءاً من عام 2026، وانقري على أي يوم لعرض كافة تفاصيل امتحاناتكِ وأنشطتكِ المسجلة فيه مرة واحدة.</p>
-                <p><strong>2. قسم الامتحانات:</strong> أضيفي امتحاناتكِ مع اختيار لون المادة، وسيظهر وسم "نفذ الوقت ⌛" تلقائياً إن انتهى تاريخ الامتحان دون إتمامه.</p>
-                <p><strong>3. مساعد الفاينل الذكي:</strong> أدخلي امتحاناتكِ وساعات دراستكِ اليومية لتوليدي خطة دراسية متوازنة للفاينل وقابلة للطباعة.</p>
-                <p><strong>4. جدول الحصص المدرسية:</strong> جدول مزخرف يملأ ورقة A4 بالكامل، يمكنكِ تعبئته والضغط على "حفظ الجدول في الحساب" ليبقى محفوظاً دائماً.</p>
-                <p><strong>5. الإضافة السريعة (➕):</strong> اضغطي الزر في منتصف الشريط السفلي لإضافة أي مهمة أو مشوار بضغطة واحدة.</p>
+                <p><strong>1. التقويم التفاعلي:</strong> يمكنكِ التنقل بين الأشهر والسنوات بدءاً من عام 2026، وانقري على أي يوم لعرض كافة تفاصيل امتحاناتكِ وأنشطتكِ المسجلة فيه مرة واحدة[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span).</p>
+                <p><strong>2. قسم الامتحانات:</strong> أضيفي امتحاناتكِ مع اختيار لون المادة، وسيظهر وسم "نفذ الوقت ⌛" تلقائياً إن انتهى تاريخ الامتحان دون إتمامه[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span).</p>
+                <p><strong>3. مساعد الفاينل الذكي:</strong> أدخلي امتحاناتكِ وساعات دراستكِ اليومية لتوليدي خطة دراسية متوازنة للفاينل وقابلة للطباعة[span_11](start_span)[span_11](end_span)[span_12](start_span)[span_12](end_span).</p>
+                <p><strong>4. جدول الحصص المدرسية:</strong> جدول مزخرف يملأ ورقة A4 بالكامل، عند الحفظ بـ PDF اختاري Paper Size: A4 و Margins: None للحصول على نتيجة مثالية 100%[span_13](start_span)[span_13](end_span)[span_14](start_span)[span_14](end_span).</p>
+                <p><strong>5. الإضافة السريعة (➕):</strong> اضغطي الزر في منتصف الشريط السفلي لإضافة أي مهمة أو مشوار بضغطة واحدة[span_15](start_span)[span_15](end_span)[span_16](start_span)[span_16](end_span).</p>
             ` : `
-                <p><strong>1. التقويم التفاعلي:</strong> يمكنك التنقل بين الأشهر والسنوات بدءاً من عام 2026، وانقر على أي يوم لعرض كافة تفاصيل امتحاناتك وأنشطتك المسجلة فيه مرة واحدة.</p>
-                <p><strong>2. قسم الامتحانات:</strong> أضف امتحاناتك مع اختيار لون المادة، وسيظهر وسم "نفذ الوقت ⌛" تلقائياً إن انتهى تاريخ الامتحان دون إتمامه.</p>
-                <p><strong>3. مساعد الفاينل الذكي:</strong> أدخل امتحاناتك وساعات دراستك اليومية لتوليد خطة دراسية متوازنة للفاينل وقابلة للطباعة.</p>
-                <p><strong>4. جدول الحصص المدرسية:</strong> جدول مزخرف يملأ ورقة A4 بالكامل، يمكنك تعبئته والضغط على "حفظ الجدول في الحساب" ليبقى محفوظاً دائماً.</p>
-                <p><strong>5. الإضافة السريعة (➕):</strong> اضغط الزر في منتصف الشريط السفلي لإضافة أي مهمة أو مشوار بضغطة واحدة.</p>
+                <p><strong>1. التقويم التفاعلي:</strong> يمكنك التنقل بين الأشهر والسنوات بدءاً من عام 2026، وانقر على أي يوم لعرض كافة تفاصيل امتحاناتك وأنشطتك المسجلة فيه مرة واحدة[span_17](start_span)[span_17](end_span)[span_18](start_span)[span_18](end_span).</p>
+                <p><strong>2. قسم الامتحانات:</strong> أضف امتحاناتك مع اختيار لون المادة، وسيظهر وسم "نفذ الوقت ⌛" تلقائياً إن انتهى تاريخ الامتحان دون إتمامه[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span).</p>
+                <p><strong>3. مساعد الفاينل الذكي:</strong> أدخل امتحاناتك وساعات دراستك اليومية لتوليد خطة دراسية متوازنة للفاينل وقابلة للطباعة[span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span).</p>
+                <p><strong>4. جدول الحصص المدرسية:</strong> جدول مزخرف يملأ ورقة A4 بالكامل، عند الحفظ بـ PDF اختر Paper Size: A4 و Margins: None للحصول على نتيجة مثالية 100%[span_23](start_span)[span_23](end_span)[span_24](start_span)[span_24](end_span).</p>
+                <p><strong>5. الإضافة السريعة (➕):</strong> اضغط الزر في منتصف الشريط السفلي لإضافة أي مهمة أو مشوار بضغطة واحدة[span_25](start_span)[span_25](end_span)[span_26](start_span)[span_26](end_span).</p>
             `;
 
             document.getElementById('guideModalCloseBtn').innerText = isFemale ? "فهمتُ، ابدئي التنظيم ✨" : "فهمت، ابدأ التنظيم ✨";
@@ -1719,7 +1726,6 @@
             if (sch.workDays) document.getElementById('workDaysSelect').value = sch.workDays;
             if (sch.periods) {
                 document.getElementById('periodsCount').value = sch.periods;
-                // إعادة رسم الجدول بالعدد المحفوظ دون إعادة التحميل بشكل متكرر
             }
 
             if (sch.cells) {
