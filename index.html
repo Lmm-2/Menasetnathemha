@@ -418,7 +418,7 @@
             word-break: break-word;
         }
 
-        /* تنسيق الجداول والاحتواء المرن */
+        /* تنسيق الجداول والطباعة الاحترافية */
         .table-responsive-wrapper {
             width: 100%;
             overflow-x: auto;
@@ -431,7 +431,7 @@
         .printable-container {
             width: 100%;
             background: white;
-            padding: 10px;
+            padding: 15px;
             border-radius: 12px;
         }
 
@@ -458,7 +458,6 @@
             print-color-adjust: exact !important;
         }
 
-        /* إعدادات متطورة للطباعة لتملأ صفحة الـ PDF بالألوان والعرض المناسب */
         @page {
             size: A4 landscape;
             margin: 10mm;
@@ -657,7 +656,7 @@
 
                     <div class="banner-slide" id="slide2">
                         <h3>🗓️ جدول الحصص الأسبوعي</h3>
-                        <p id="slide2Desc">أدخلي حصصك وأوقاتك اليومية واختاري الثيم المناسب للطباعة أو التنزيل!</p>
+                        <p id="slide2Desc">أدخلي أيام دوامك وحصصك واختاري التصميم والثيم المناسب للطباعة!</p>
                         <button class="banner-btn" onclick="openSection('schoolSchedule')" id="slide2Btn">إنشاء الجدول 🖨️</button>
                     </div>
 
@@ -775,12 +774,20 @@
                 <div id="generatedScheduleOutput"></div>
             </div>
 
-            <!-- 3. جدول الحصص المدرسية -->
+            <!-- 3. جدول الحصص المدرسية (المُحدث مع الحفظ التلقائي وأيام الدوام) -->
             <div id="schoolScheduleSection" style="display: none;" class="card">
                 <button class="back-nav-btn" onclick="backToHome()">⬅ العودة للرئيسية</button>
                 <h2>🗓️ جدول الحصص المدرسية</h2>
                 
                 <div style="background: var(--input-bg); padding: 10px; border-radius: 10px; margin-bottom: 12px;">
+                    
+                    <label style="font-size: 12px; font-weight: bold; display: block; margin-bottom: 4px;">اختر أيام الدوام الأسبوعي:</label>
+                    <select id="workDaysSelect" onchange="setupSchoolGrid()" style="margin-bottom: 8px; font-weight: bold;">
+                        <option value="sun-thu">من الأحد إلى الخميس</option>
+                        <option value="mon-fri">من الإثنين إلى الجمعة</option>
+                        <option value="sat-wed">من السبت إلى الأربعاء</option>
+                    </select>
+
                     <div class="form-row">
                         <div>
                             <label style="font-size: 11px; font-weight: bold;">عدد الحصص اليومية:</label>
@@ -795,16 +802,20 @@
                             <label style="font-size: 11px; font-weight: bold;">ثيم/لون الجدول:</label>
                             <select id="scheduleTheme">
                                 <option value="classic">كلاسيكي 🟤</option>
-                                <option value="pastel">ربيعي 🌸</option>
-                                <option value="modern">حديث 🔵</option>
-                                <option value="purple">بنفسجي 💜</option>
-                                <option value="emerald">زمردي 💚</option>
+                                <option value="pastel">ربيعي وردي 🌸</option>
+                                <option value="purple">بنفسجي هادئ 💜</option>
+                                <option value="modern">حديث أزرق 🔵</option>
+                                <option value="emerald">زمردي أخضر 💚</option>
                             </select>
                         </div>
                     </div>
 
                     <div id="schoolInputsGrid" style="overflow-x: auto; margin-top: 8px;"></div>
-                    <button class="action-btn" onclick="saveAndGenerateSchoolSchedule()" style="width: 100%; margin-top: 10px;">توليد الجدول 🖨️</button>
+                    
+                    <div style="display: flex; gap: 8px; margin-top: 10px;">
+                        <button class="action-btn" onclick="saveSchoolScheduleToProfile()" style="background: var(--accent-green); flex: 1;">حفظ الجدول 💾</button>
+                        <button class="action-btn" onclick="saveAndGenerateSchoolSchedule()" style="flex: 2;">توليد وعرض الجدول 🖨️</button>
+                    </div>
                 </div>
 
                 <div id="schoolScheduleOutput"></div>
@@ -1116,7 +1127,7 @@
             let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
 
             if (!allUsers[id]) {
-                allUsers[id] = { name: name, gender: selectedGender, exams: [], cooking: [], outings: [], tasks: [] };
+                allUsers[id] = { name: name, gender: selectedGender, exams: [], cooking: [], outings: [], tasks: [], schoolSchedule: null };
                 localStorage.setItem('allUniversalUsersDB', JSON.stringify(allUsers));
             }
 
@@ -1165,13 +1176,13 @@
                 <p><strong>1. التقويم التفاعلي:</strong> يمكنكِ التنقل بين الأشهر والسنوات بدءاً من عام 2026، وانقري على أي يوم لعرض كافة تفاصيل امتحاناتكِ وأنشطتكِ المسجلة فيه مرة واحدة.</p>
                 <p><strong>2. قسم الامتحانات:</strong> أضيفي امتحاناتكِ مع اختيار لون المادة، وسيظهر وسم "نفذ الوقت ⌛" تلقائياً إن انتهى تاريخ الامتحان دون إتمامه.</p>
                 <p><strong>3. مساعد الفاينل الذكي:</strong> أدخلي امتحاناتكِ وساعات دراستكِ اليومية لتوليدي خطة دراسية متوازنة للفاينل وقابلة للطباعة.</p>
-                <p><strong>4. جدول الحصص المدرسية:</strong> اختاري ثيم الألوان وأدخلي حصصكِ اليومية للحصول على جدول مدرسي مرتب وجميل.</p>
+                <p><strong>4. جدول الحصص المدرسية:</strong> حددي أيام دوام دولتكِ وأدخلي حصصكِ واضغطي "حفظ الجدول" ليبقى محفوظاً دائماً.</p>
                 <p><strong>5. الإضافة السريعة (➕):</strong> اضغطي الزر في منتصف الشريط السفلي لإضافة أي مهمة أو مشوار بضغطة واحدة.</p>
             ` : `
                 <p><strong>1. التقويم التفاعلي:</strong> يمكنك التنقل بين الأشهر والسنوات بدءاً من عام 2026، وانقر على أي يوم لعرض كافة تفاصيل امتحاناتك وأنشطتك المسجلة فيه مرة واحدة.</p>
                 <p><strong>2. قسم الامتحانات:</strong> أضف امتحاناتك مع اختيار لون المادة، وسيظهر وسم "نفذ الوقت ⌛" تلقائياً إن انتهى تاريخ الامتحان دون إتمامه.</p>
                 <p><strong>3. مساعد الفاينل الذكي:</strong> أدخل امتحاناتك وساعات دراستك اليومية لتوليد خطة دراسية متوازنة للفاينل وقابلة للطباعة.</p>
-                <p><strong>4. جدول الحصص المدرسية:</strong> اختر ثيم الألوان وأدخل حصصك اليومية للحصول على جدول مدرسي مرتب وجميل.</p>
+                <p><strong>4. جدول الحصص المدرسية:</strong> حدد أيام دوام دولتك وأدخل حصصك واضغط "حفظ الجدول" ليبقى محفوظاً دائماً.</p>
                 <p><strong>5. الإضافة السريعة (➕):</strong> اضغط الزر في منتصف الشريط السفلي لإضافة أي مهمة أو مشوار بضغطة واحدة.</p>
             `;
 
@@ -1583,9 +1594,20 @@
             document.getElementById('generatedScheduleOutput').innerHTML = html;
         }
 
+        function getSelectedDaysList() {
+            let choice = document.getElementById('workDaysSelect').value;
+            if (choice === 'mon-fri') {
+                return ['الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];
+            } else if (choice === 'sat-wed') {
+                return ['السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء'];
+            } else {
+                return ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
+            }
+        }
+
         function setupSchoolGrid() {
             let periods = parseInt(document.getElementById('periodsCount').value);
-            let days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
+            let days = getSelectedDaysList();
             
             let html = `<table style="width: 100%; border-collapse: collapse; font-size: 10px;">
                 <thead>
@@ -1604,19 +1626,86 @@
             html += `</tbody></table>`;
 
             document.getElementById('schoolInputsGrid').innerHTML = html;
+
+            // استرجاع الجدول المحفوظ إن وجد
+            loadSchoolScheduleFromProfile();
         }
 
-        // توليد جدول الحصص مع تلوين الألوان بشكل كامل عند الطباعة
+        function saveSchoolScheduleToProfile() {
+            let activeId = localStorage.getItem('activeUniversalUser');
+            if (!activeId) return;
+
+            let periods = parseInt(document.getElementById('periodsCount').value);
+            let workDays = document.getElementById('workDaysSelect').value;
+            let theme = document.getElementById('scheduleTheme').value;
+            let days = getSelectedDaysList();
+
+            let scheduleData = {
+                periods: periods,
+                workDays: workDays,
+                theme: theme,
+                cells: {}
+            };
+
+            days.forEach((day, dIdx) => {
+                for (let p = 1; p <= periods; p++) {
+                    let input = document.querySelector(`.sch-input[data-day="${dIdx}"][data-period="${p}"]`);
+                    if (input && input.value.trim()) {
+                        scheduleData.cells[`${dIdx}_${p}`] = input.value.trim();
+                    }
+                }
+            });
+
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+            if (allUsers[activeId]) {
+                allUsers[activeId].schoolSchedule = scheduleData;
+                localStorage.setItem('allUniversalUsersDB', JSON.stringify(allUsers));
+                alert("تم حفظ جدول الحصص في حسابكِ بنجاح! 💾✨");
+            }
+        }
+
+        function loadSchoolScheduleFromProfile() {
+            let activeId = localStorage.getItem('activeUniversalUser');
+            if (!activeId) return;
+
+            let allUsers = JSON.parse(localStorage.getItem('allUniversalUsersDB')) || {};
+            let user = allUsers[activeId];
+            if (!user || !user.schoolSchedule) return;
+
+            let sch = user.schoolSchedule;
+            if (sch.workDays) document.getElementById('workDaysSelect').value = sch.workDays;
+            if (sch.periods) {
+                document.getElementById('periodsCount').value = sch.periods;
+                setupSchoolGrid(); // إعادة بناء الجدول ليتطابق مع عدد الحصص وأيام الدوام
+            }
+            if (sch.theme) document.getElementById('scheduleTheme').value = sch.theme;
+
+            if (sch.cells) {
+                for (let key in sch.cells) {
+                    let parts = key.split('_');
+                    let dIdx = parts[0];
+                    let p = parts[1];
+                    let input = document.querySelector(`.sch-input[data-day="${dIdx}"][data-period="${p}"]`);
+                    if (input) {
+                        input.value = sch.cells[key];
+                    }
+                }
+            }
+        }
+
         function saveAndGenerateSchoolSchedule() {
+            // حفظ تلقائي عند التوليد أيضاً لضمان راحة المستخدم
+            saveSchoolScheduleToProfile();
+
             let periods = parseInt(document.getElementById('periodsCount').value);
             let theme = document.getElementById('scheduleTheme').value;
-            let days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
+            let days = getSelectedDaysList();
             
             let themeColors = {
                 'classic': '#8b5e3c',
                 'pastel': '#b56576',
-                'modern': '#2c3e50',
                 'purple': '#8e44ad',
+                'modern': '#2c3e50',
                 'emerald': '#16a085'
             };
 
