@@ -222,6 +222,7 @@
             border-radius: 16px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.03);
             border: 1px solid var(--border-color);
+            overflow: hidden;
         }
 
         .card h2 {
@@ -417,50 +418,90 @@
             word-break: break-word;
         }
 
-        /* تنسيق الجداول المطبوعة لتملأ الصفحة بالكامل بوضوح وأناقة */
+        /* حاوية الجدول المرنة لتجنب البروز خارج الشاشة في الموبايل */
+        .table-responsive-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            margin-top: 10px;
+            -webkit-overflow-scrolling: touch;
+        }
+
         .printable-container {
             width: 100%;
             background: white;
-            padding: 20px;
+            padding: 10px;
             border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .schedule-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
             background: white;
+            min-width: 500px; /* لضمان التنسيق في الموبايل */
         }
 
         .schedule-table th, .schedule-table td {
             border: 1.5px solid #333;
-            padding: 12px 8px;
+            padding: 8px 4px;
             text-align: center;
-            font-size: 14px;
+            font-size: 12px;
+            word-break: break-word;
         }
 
         .schedule-table th {
-            color: white;
-            font-size: 15px;
+            color: white !important;
+            font-size: 12px;
+            font-weight: 800;
+            /* إجبار المتصفح والموبايل على إظهار خلفية الثيم بالألوان */
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* إعدادات الطباعة الشاملة لجعل الصفحة بالعرض وتملأ الـ PDF بالألوان */
+        @page {
+            size: A4 landscape;
+            margin: 5mm;
         }
 
         @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
             body * {
                 visibility: hidden;
             }
             #printableArea, #printableArea * {
                 visibility: visible;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
             #printableArea {
                 position: absolute;
                 left: 0;
                 top: 0;
                 width: 100% !important;
-                height: 100% !important;
-                padding: 10mm;
-                margin: 0;
-                box-shadow: none;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .table-responsive-wrapper {
+                border: none !important;
+                overflow: visible !important;
+            }
+            .schedule-table {
+                width: 100% !important;
+                min-width: 100% !important;
+            }
+            .schedule-table th {
+                padding: 12px 6px !important;
+                font-size: 14px !important;
+            }
+            .schedule-table td {
+                padding: 14px 6px !important;
+                font-size: 13px !important;
+                font-weight: bold !important;
             }
             .no-print {
                 display: none !important;
@@ -749,9 +790,11 @@
                         <div>
                             <label style="font-size: 11px; font-weight: bold;">ثيم/لون الجدول:</label>
                             <select id="scheduleTheme">
-                                <option value="classic">كلاسيكي 🟤</option>
-                                <option value="pastel">ربيعي 🌸</option>
-                                <option value="modern">حديث 🔵</option>
+                                <option value="classic">كلاسيكي 🟤 (#8b5e3c)</option>
+                                <option value="pastel">ربيعي 🌸 (#b56576)</option>
+                                <option value="modern">حديث 🔵 (#2c3e50)</option>
+                                <option value="purple">بنفسجي 💜 (#8e44ad)</option>
+                                <option value="emerald">زمردي 💚 (#16a085)</option>
                             </select>
                         </div>
                     </div>
@@ -851,7 +894,6 @@
 
         </div>
 
-        <!-- شريط التصفح السفلي الثابت -->
         <div class="bottom-nav">
             <div class="nav-item active" onclick="backToHome()">
                 <span class="nav-item-icon">🏠</span>
@@ -880,7 +922,7 @@
         </footer>
     </div>
 
-    <!-- نافذة شاملة لعرض كافة أنشطة اليوم عند النقر على الخلية -->
+    <!-- نافذة تفاصيل اليوم -->
     <div id="dayDetailModal" class="modal-overlay">
         <div class="popup-card">
             <h3 style="color: var(--nav-bg); margin-bottom: 12px; text-align: center;" id="dayDetailDateTitle">أنشطة اليوم 📅</h3>
@@ -903,7 +945,7 @@
         </div>
     </div>
 
-    <!-- نافذة دليل الإرشاد والاستخدام -->
+    <!-- نافذة الدليل -->
     <div id="guideModal" class="modal-overlay">
         <div class="popup-card">
             <h3 style="color: var(--nav-bg); margin-bottom: 10px; text-align: center;" id="guideModalTitle">📖 دليل استخدام موقع نَظِّمْها</h3>
@@ -915,7 +957,7 @@
     <script>
         let selectedGender = '';
         let currentCalYear = 2026;
-        let currentCalMonth = 9; // أكتوبر
+        let currentCalMonth = 9;
         let currentSlide = 0;
 
         const monthNames = [
@@ -1490,17 +1532,18 @@
                 <div id="printableArea" class="printable-container">
                     <h2 style="text-align: center; margin-bottom: 5px; color: #333;">📖 ${title}</h2>
                     <p style="text-align: center; font-size: 11px; opacity: 0.8; margin-bottom: 10px;">منصة نَظِّمْها الذكية</p>
-                    <table class="schedule-table">
-                        <thead>
-                            <tr style="background: var(--nav-bg);">
-                                <th>#</th>
-                                <th>المادة</th>
-                                <th>الموضوع / الجزء المطلوب</th>
-                                <th>الوقت المخصص</th>
-                                <th>حالة الإنجاز</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive-wrapper">
+                        <table class="schedule-table">
+                            <thead>
+                                <tr style="background: var(--nav-bg);">
+                                    <th>#</th>
+                                    <th>المادة</th>
+                                    <th>الموضوع / الجزء المطلوب</th>
+                                    <th>الوقت المخصص</th>
+                                    <th>حالة الإنجاز</th>
+                                </tr>
+                            </thead>
+                            <tbody>
             `;
 
             let count = 0;
@@ -1526,8 +1569,9 @@
             if (count === 0) { alert("يرجى إدخال مادة واحدة على الأقل."); return; }
 
             html += `
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <button class="action-btn no-print" onclick="window.print()" style="width: 100%; margin-top: 10px;">طباعة / تنزيل PDF 🖨️</button>
             `;
@@ -1558,21 +1602,31 @@
             document.getElementById('schoolInputsGrid').innerHTML = html;
         }
 
+        // الربط المباشر للون الثيم مع تفعيل خلفية الطباعة
         function saveAndGenerateSchoolSchedule() {
             let periods = parseInt(document.getElementById('periodsCount').value);
             let theme = document.getElementById('scheduleTheme').value;
             let days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
             
-            let headerBg = theme === 'classic' ? '#8b5e3c' : (theme === 'pastel' ? '#b56576' : '#3498db');
+            let themeColors = {
+                'classic': '#8b5e3c',
+                'pastel': '#b56576',
+                'modern': '#2c3e50',
+                'purple': '#8e44ad',
+                'emerald': '#16a085'
+            };
+
+            let headerBg = themeColors[theme] || '#8b5e3c';
 
             let html = `
                 <div id="printableArea" class="printable-container">
                     <h2 style="text-align: center; color: ${headerBg}; margin-bottom: 8px;">🗓️ جدول الحصص الأسبوعي</h2>
-                    <table class="schedule-table">
-                        <thead>
-                            <tr style="background: ${headerBg}; color: white;">
-                                <th>اليوم</th>`;
-            for (let p = 1; p <= periods; p++) html += `<th>الحصة ${p}</th>`;
+                    <div class="table-responsive-wrapper">
+                        <table class="schedule-table">
+                            <thead>
+                                <tr style="background-color: ${headerBg} !important; color: white !important;">
+                                    <th style="background-color: ${headerBg} !important; color: white !important;">اليوم</th>`;
+            for (let p = 1; p <= periods; p++) html += `<th style="background-color: ${headerBg} !important; color: white !important;">الحصة ${p}</th>`;
             html += `</tr></thead><tbody>`;
 
             days.forEach((day, dIdx) => {
@@ -1585,7 +1639,7 @@
                 html += `</tr>`;
             });
 
-            html += `</tbody></table></div>
+            html += `</tbody></table></div></div>
                 <button class="action-btn no-print" onclick="window.print()" style="width: 100%; margin-top: 10px;">طباعة الجدول 🖨️</button>`;
 
             document.getElementById('schoolScheduleOutput').innerHTML = html;
@@ -1621,16 +1675,17 @@
             }
 
             planHtml += `
-                <table class="schedule-table">
-                    <thead>
-                        <tr style="background: var(--nav-bg);">
-                            <th>المادة</th>
-                            <th>تاريخ الامتحان</th>
-                            <th>أيام الدراسة المقترحة</th>
-                            <th>توزيع الوقت اليومي</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="table-responsive-wrapper">
+                    <table class="schedule-table">
+                        <thead>
+                            <tr style="background: var(--nav-bg);">
+                                <th>المادة</th>
+                                <th>تاريخ الامتحان</th>
+                                <th>أيام الدراسة المقترحة</th>
+                                <th>توزيع الوقت اليومي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
             `;
 
             let count = 0;
@@ -1655,8 +1710,9 @@
             if (count === 0) { alert("يرجى إدخال مادة واحدة على الأقل."); return; }
 
             planHtml += `
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
                 </div>
                 <button class="action-btn no-print" onclick="window.print()" style="width: 100%; margin-top: 10px;">طباعة خطة الفاينل 🖨️</button>
             `;
